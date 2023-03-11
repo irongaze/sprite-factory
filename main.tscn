@@ -1,0 +1,142 @@
+[gd_scene load_steps=5 format=3 uid="uid://0ko882b1evu1"]
+
+[ext_resource type="Script" path="res://Editor.gd" id="1_7y1d0"]
+[ext_resource type="Script" path="res://ProjectMenu.gd" id="1_55ii8"]
+[ext_resource type="Texture2D" uid="uid://b4ku027bjg2rd" path="res://assets/icon.svg" id="3_8efd1"]
+[ext_resource type="Script" path="res://Canvas.gd" id="4_g5l2y"]
+
+[node name="Editor" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_7y1d0")
+
+[node name="MainMenuBar" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="ProjectMenu" type="MenuButton" parent="MainMenuBar"]
+layout_mode = 2
+text = "Project"
+switch_on_hover = true
+item_count = 6
+popup/item_0/text = "New Project..."
+popup/item_0/id = 5
+popup/item_1/text = "Open Project..."
+popup/item_1/id = 1
+popup/item_2/text = "Properties..."
+popup/item_2/id = 2
+popup/item_3/text = "Reveal Folder"
+popup/item_3/id = 3
+popup/item_4/text = ""
+popup/item_4/id = 0
+popup/item_4/separator = true
+popup/item_5/text = "Exit"
+popup/item_5/id = 4
+script = ExtResource("1_55ii8")
+
+[node name="ProjectDialog" type="FileDialog" parent="MainMenuBar/ProjectMenu"]
+title = "Load Project"
+size = Vector2i(600, 450)
+ok_button_text = "Open"
+mode_overrides_title = false
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.project; Project Files")
+
+[node name="ModelMenu" type="MenuButton" parent="MainMenuBar"]
+layout_mode = 2
+text = "Model"
+switch_on_hover = true
+item_count = 4
+popup/item_0/text = "Load..."
+popup/item_0/id = 0
+popup/item_1/text = "Properties..."
+popup/item_1/id = 1
+popup/item_2/text = ""
+popup/item_2/id = 2
+popup/item_2/separator = true
+popup/item_3/text = "Exit"
+popup/item_3/id = 3
+
+[node name="MainWindow" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="LeftPane" type="VBoxContainer" parent="MainWindow"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="PreviewTabs" type="TabContainer" parent="MainWindow/LeftPane"]
+custom_minimum_size = Vector2(0, 231)
+layout_mode = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.57
+
+[node name="Preview" type="SubViewportContainer" parent="MainWindow/LeftPane/PreviewTabs"]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="MainWindow/LeftPane/PreviewTabs/Preview"]
+disable_3d = true
+handle_input_locally = false
+size = Vector2i(200, 200)
+size_2d_override = Vector2i(96, 96)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="MainWindow/LeftPane/PreviewTabs/Preview/SubViewport"]
+position = Vector2(48, 48)
+texture = ExtResource("3_8efd1")
+
+[node name="ComponentTabs" type="TabContainer" parent="MainWindow/LeftPane"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Components" type="ItemList" parent="MainWindow/LeftPane/ComponentTabs"]
+layout_mode = 2
+item_count = 1
+item_0/text = "Chassis"
+
+[node name="CenterPane" type="VBoxContainer" parent="MainWindow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ToolBar" type="HBoxContainer" parent="MainWindow/CenterPane"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="CanvasContainer" type="AspectRatioContainer" parent="MainWindow/CenterPane"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Canvas" type="Control" parent="MainWindow/CenterPane/CanvasContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("4_g5l2y")
+
+[node name="RightPane" type="VBoxContainer" parent="MainWindow"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="Channels" type="TabContainer" parent="MainWindow/RightPane"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Diffuse" type="Container" parent="MainWindow/RightPane/Channels"]
+layout_mode = 2
+
+[node name="Specular" type="Container" parent="MainWindow/RightPane/Channels"]
+visible = false
+layout_mode = 2
+
+[node name="Emissive" type="Container" parent="MainWindow/RightPane/Channels"]
+visible = false
+layout_mode = 2
