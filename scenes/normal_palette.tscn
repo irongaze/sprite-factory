@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://nlyiy0krtf0y"]
+
+[ext_resource type="PackedScene" uid="uid://dgto1cgm87w1b" path="res://addons/sprite_factory/scenes/section_title.tscn" id="1_wj3ye"]
+[ext_resource type="Texture2D" uid="uid://ct4nddltyxuj0" path="res://addons/sprite_factory/assets/normal-palette-smooth.png" id="2_83ycy"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/normal_control.gd" id="2_eimbn"]
+
+[node name="NormalPalette" type="VBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 30.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="SectionTitle" parent="." instance=ExtResource("1_wj3ye")]
+layout_mode = 2
+title = "Normal Palette"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="NormalControl" type="Control" parent="PanelContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("2_eimbn")
+
+[node name="NormalSmooth" type="Sprite2D" parent="PanelContainer/NormalControl"]
+position = Vector2(100, 100)
+texture = ExtResource("2_83ycy")

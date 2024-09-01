@@ -1,0 +1,230 @@
+[gd_scene load_steps=20 format=3 uid="uid://bdmvp4e3o6r4m"]
+
+[ext_resource type="Script" path="res://addons/sprite_factory/scripts/main_panel.gd" id="1_fmjr3"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scripts/canvas_background.gd" id="2_d4j83"]
+[ext_resource type="Texture2D" uid="uid://c2l6k8wyuvj1d" path="res://addons/sprite_factory/icons/ToolSelect.svg" id="2_pss5e"]
+[ext_resource type="Texture2D" uid="uid://43s7nb5g5p0x" path="res://addons/sprite_factory/icons/ToolTriangle.svg" id="3_4v2et"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scripts/select_tool.gd" id="3_lmjnw"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scripts/render_canvas.gd" id="3_yqayd"]
+[ext_resource type="Texture2D" uid="uid://1aao14euqyjp" path="res://addons/sprite_factory/icons/ToolScale.svg" id="4_do8gv"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scripts/draw_tool.gd" id="4_yf4u1"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scripts/render_viewport.gd" id="5_n4mxf"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/canvas_input.gd" id="7_ccg8r"]
+[ext_resource type="Texture2D" uid="uid://bt54rgg1td16w" path="res://addons/sprite_factory/icons/SnapGrid.svg" id="7_ts5jn"]
+[ext_resource type="Texture2D" uid="uid://ctl4bug1fanlx" path="res://addons/sprite_factory/icons/Snap.svg" id="8_43rd8"]
+[ext_resource type="Texture2D" uid="uid://4bss3eo77fmd" path="res://addons/sprite_factory/icons/SnapLine.svg" id="8_r8rgt"]
+[ext_resource type="Texture2D" uid="uid://b2wae2bgukggx" path="res://addons/sprite_factory/icons/GuiTabMenuHl.svg" id="10_pq3o5"]
+[ext_resource type="PackedScene" uid="uid://3ksvlekcrqxx" path="res://addons/sprite_factory/scenes/palette_colors_window.tscn" id="15_inwv6"]
+
+[sub_resource type="GDScript" id="GDScript_crvly"]
+script/source = "@tool
+extends Button
+
+func _ready():
+  toggled.connect(func(pressed): SpriteEditor.snap_point = pressed; SpriteEditor.ui_changed.emit())
+  SpriteEditor.ui_changed.connect(update_ui)
+  update_ui()
+
+func update_ui():
+  button_pressed = SpriteEditor.snap_point
+  tooltip_text = \"Snap to point: \" + (\"On\" if SpriteEditor.snap_point else \"Off\") + \"\\nClick to toggle\"
+"
+
+[sub_resource type="GDScript" id="GDScript_8tqpo"]
+script/source = "@tool
+extends Button
+
+func _ready():
+  toggled.connect(func(pressed): SpriteEditor.snap_line = pressed; SpriteEditor.ui_changed.emit())
+  SpriteEditor.ui_changed.connect(update_ui)
+  update_ui()
+
+func update_ui():
+  button_pressed = SpriteEditor.snap_line
+  tooltip_text = \"Snap to line: \" + (\"On\" if SpriteEditor.snap_line else \"Off\") + \"\\nClick to toggle\"
+"
+
+[sub_resource type="GDScript" id="GDScript_fplgx"]
+script/source = "@tool
+extends Button
+
+func _ready():
+  toggled.connect(func(pressed): SpriteEditor.snap_grid = pressed; SpriteEditor.ui_changed.emit())
+  SpriteEditor.ui_changed.connect(update_ui)
+  update_ui()
+
+func update_ui():
+  button_pressed = SpriteEditor.snap_grid
+  tooltip_text = \"Snap to grid: \" + (\"On\" if SpriteEditor.snap_grid else \"Off\") + \"\\nClick to toggle\"
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2o8mm"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+border_width_left = 4
+border_width_right = 4
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[node name="MainPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_fmjr3")
+
+[node name="MainLayout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Toolbar" type="HBoxContainer" parent="MainLayout"]
+layout_mode = 2
+
+[node name="SelectButton" type="Button" parent="MainLayout/Toolbar"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+focus_mode = 0
+disabled = true
+toggle_mode = true
+action_mode = 0
+icon = ExtResource("2_pss5e")
+flat = true
+icon_alignment = 1
+script = ExtResource("3_lmjnw")
+
+[node name="DrawButton" type="Button" parent="MainLayout/Toolbar"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Select a layer to draw new shapes"
+focus_mode = 0
+disabled = true
+toggle_mode = true
+action_mode = 0
+icon = ExtResource("3_4v2et")
+flat = true
+icon_alignment = 1
+script = ExtResource("4_yf4u1")
+
+[node name="ScaleButton" type="Button" parent="MainLayout/Toolbar"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+focus_mode = 0
+disabled = true
+toggle_mode = true
+action_mode = 0
+icon = ExtResource("4_do8gv")
+flat = true
+icon_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="MainLayout/Toolbar"]
+layout_mode = 2
+
+[node name="SnapPointButton" type="Button" parent="MainLayout/Toolbar"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Snap to point: On
+Click to toggle"
+focus_mode = 0
+toggle_mode = true
+button_pressed = true
+action_mode = 0
+icon = ExtResource("8_43rd8")
+flat = true
+icon_alignment = 1
+script = SubResource("GDScript_crvly")
+
+[node name="SnapLineButton" type="Button" parent="MainLayout/Toolbar"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Snap to line: On
+Click to toggle"
+focus_mode = 0
+toggle_mode = true
+button_pressed = true
+action_mode = 0
+icon = ExtResource("8_r8rgt")
+flat = true
+icon_alignment = 1
+script = SubResource("GDScript_8tqpo")
+
+[node name="SnapGridButton" type="Button" parent="MainLayout/Toolbar"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Snap to grid: On
+Click to toggle"
+focus_mode = 0
+toggle_mode = true
+button_pressed = true
+action_mode = 0
+icon = ExtResource("7_ts5jn")
+flat = true
+icon_alignment = 1
+script = SubResource("GDScript_fplgx")
+
+[node name="VSeparator2" type="VSeparator" parent="MainLayout/Toolbar"]
+layout_mode = 2
+
+[node name="SettingsButton" type="Button" parent="MainLayout/Toolbar"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+focus_mode = 0
+disabled = true
+action_mode = 0
+icon = ExtResource("10_pq3o5")
+flat = true
+icon_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MainLayout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2o8mm")
+
+[node name="CanvasContainer" type="AspectRatioContainer" parent="MainLayout/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CanvasBackground" type="Control" parent="MainLayout/PanelContainer/CanvasContainer"]
+layout_mode = 2
+script = ExtResource("2_d4j83")
+
+[node name="PrimaryCanvas" type="Control" parent="MainLayout/PanelContainer/CanvasContainer"]
+layout_mode = 2
+script = ExtResource("3_yqayd")
+show_selection = true
+
+[node name="CanvasInput" type="Control" parent="MainLayout/PanelContainer/CanvasContainer"]
+layout_mode = 2
+script = ExtResource("7_ccg8r")
+
+[node name="Footer" type="HBoxContainer" parent="MainLayout"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainLayout/Footer"]
+layout_mode = 2
+text = "x: 12.2 | y: -29.0"
+
+[node name="RenderViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+script = ExtResource("5_n4mxf")
+
+[node name="RenderCanvas" type="Control" parent="RenderViewport"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 432.5
+offset_top = 35.0
+offset_right = 1567.5
+offset_bottom = 1170.0
+script = ExtResource("3_yqayd")
+
+[node name="PaletteColorsWindow" parent="." instance=ExtResource("15_inwv6")]

@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgto1cgm87w1b"]
+
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/section_title.gd" id="1_ue4bb"]
+
+[node name="SectionTitle" type="MarginContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 26.0
+grow_horizontal = 2
+size_flags_vertical = 0
+script = ExtResource("1_ue4bb")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(1, 1, 1, 0.235294)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="Title"]
+show_behind_parent = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.211765, 0.239216, 0.290196, 1)

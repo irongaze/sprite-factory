@@ -1,0 +1,27 @@
+Big changes
+
+- Rename Sprite to FactorySprite for clarity
+- Revamp code to avoid polluting global namespace by using preload('foo.gd') instead of class_name Foo
+
+Features
+
+- Global color palette
+  - Stored in settings as Data
+    - key + hex
+  - Shapes have SpriteColor
+    - stores color key, last color applied (so we can render even if key disappears)
+    - consider adding brighten/darken val (i.e. use 'red' at 20% brighten)
+  - Build palette widget that displays colors, shows cur selection, always has selection
+
+- Tools
+  - Add/Remove Point - add on line segment, remove on point
+  - Offset - move around
+  - Rotate - rotate around ???
+  - Scale - scale around ???
+
+- Selection
+  - points, lines, shapes, components
+
+- Components
+  - Add new ComponentLayer subclass of SpriteLayer
+    - Attrs: offset, scale, rotation

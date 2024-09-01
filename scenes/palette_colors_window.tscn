@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3 uid="uid://3ksvlekcrqxx"]
+
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/palette_colors_window.gd" id="1_a70xw"]
+
+[node name="PaletteColorsWindow" type="Window"]
+title = "Palette Colors"
+initial_position = 1
+size = Vector2i(400, 600)
+visible = false
+transient = true
+popup_window = true
+script = ExtResource("1_a70xw")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="KeyEdit" type="LineEdit" parent="PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "dark-metal"
+placeholder_text = "key"
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+color = Color(0.556863, 0.101961, 0.0196078, 1)
+edit_alpha = false
+
+[node name="DeleteButton" type="Button" parent="PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+text = "X"

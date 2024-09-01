@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=3 uid="uid://bh3wq3bpbheq1"]
+
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/layer_list.gd" id="1_k7jeq"]
+[ext_resource type="PackedScene" uid="uid://dgto1cgm87w1b" path="res://addons/sprite_factory/scenes/section_title.tscn" id="2_ub50a"]
+[ext_resource type="Texture2D" uid="uid://ckxuklldwgljm" path="res://addons/sprite_factory/icons/ToolAddNode.svg" id="3_grhi3"]
+[ext_resource type="Texture2D" uid="uid://dg5p3b4ymaite" path="res://addons/sprite_factory/icons/ArrowUp.svg" id="4_dme8k"]
+[ext_resource type="Texture2D" uid="uid://lthqc2efldh2" path="res://addons/sprite_factory/icons/ArrowDown.svg" id="5_iev2o"]
+[ext_resource type="Texture2D" uid="uid://b10h6wpxfaebg" path="res://addons/sprite_factory/icons/Remove.svg" id="6_sdgo6"]
+[ext_resource type="StyleBox" uid="uid://cejlkpx4uya18" path="res://addons/sprite_factory/scenes/style_box.tres" id="7_nku3x"]
+
+[node name="LayerList" type="VBoxContainer"]
+size_flags_vertical = 3
+script = ExtResource("1_k7jeq")
+
+[node name="LayersTitle" parent="." instance=ExtResource("2_ub50a")]
+layout_mode = 2
+title = "Layers"
+
+[node name="LayerButtons" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="AddLayerButton" type="Button" parent="LayerButtons"]
+layout_mode = 2
+focus_mode = 0
+theme_override_constants/h_separation = 6
+disabled = true
+text = "Add New"
+icon = ExtResource("3_grhi3")
+
+[node name="VSeparator" type="VSeparator" parent="LayerButtons"]
+layout_mode = 2
+
+[node name="LayerUpButton" type="Button" parent="LayerButtons"]
+layout_mode = 2
+focus_mode = 0
+theme_override_constants/h_separation = 6
+disabled = true
+text = "Up"
+icon = ExtResource("4_dme8k")
+
+[node name="LayerDownButton" type="Button" parent="LayerButtons"]
+layout_mode = 2
+focus_mode = 0
+theme_override_constants/h_separation = 6
+disabled = true
+text = "Down"
+icon = ExtResource("5_iev2o")
+
+[node name="VSeparator2" type="VSeparator" parent="LayerButtons"]
+layout_mode = 2
+
+[node name="DeleteLayerButton" type="Button" parent="LayerButtons"]
+layout_mode = 2
+focus_mode = 0
+theme_override_constants/h_separation = 6
+disabled = true
+text = "Delete"
+icon = ExtResource("6_sdgo6")
+
+[node name="LayersPanel" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("7_nku3x")
+
+[node name="NoSpriteLabel" type="Label" parent="LayersPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "no sprite selected"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="LayersPanel"]
+layout_mode = 2
+
+[node name="LayersContainer" type="VBoxContainer" parent="LayersPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3

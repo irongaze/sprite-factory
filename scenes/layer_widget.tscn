@@ -1,0 +1,130 @@
+[gd_scene load_steps=10 format=3 uid="uid://keo8r8c0j26j"]
+
+[ext_resource type="Script" path="res://addons/sprite_factory/scripts/render_canvas.gd" id="1_jdy27"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/layer_widget.gd" id="1_wy043"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/inline_edit.gd" id="2_1hk2s"]
+[ext_resource type="Texture2D" uid="uid://2aar4mwbrrdq" path="res://addons/sprite_factory/icons/Lock.svg" id="2_qoipp"]
+[ext_resource type="Texture2D" uid="uid://cptx4l1qmkha5" path="res://addons/sprite_factory/icons/GuiVisibilityVisible.svg" id="3_nbnid"]
+[ext_resource type="Texture2D" uid="uid://cxx1ra6durhu1" path="res://addons/sprite_factory/icons/Panels2Alt.svg" id="5_eoth1"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/toggle_button.gd" id="5_woebg"]
+[ext_resource type="Texture2D" uid="uid://bo72lbh0vb8fv" path="res://addons/sprite_factory/icons/GuiVisibilityHidden.svg" id="6_whj1i"]
+[ext_resource type="Texture2D" uid="uid://b71md0c7hpc0p" path="res://addons/sprite_factory/icons/Unlock.svg" id="9_wakke"]
+
+[node name="LayerWidget" type="Control"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_vertical = 0
+script = ExtResource("1_wy043")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+mouse_filter = 1
+color = Color(0.2, 0.22, 0.27, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 2
+
+[node name="RenderCanvas" type="Control" parent="ColorRect/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+mouse_filter = 1
+script = ExtResource("1_jdy27")
+bg_color = Color(0, 0, 0, 1)
+show_hidden = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LayerName" type="LineEdit" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 1
+placeholder_text = "-"
+max_length = 50
+expand_to_text_length = true
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+selecting_enabled = false
+flat = true
+select_all_on_focus = true
+script = ExtResource("2_1hk2s")
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/LayerName"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+color = Color(0.145098, 0.168627, 0.203922, 0.258824)
+
+[node name="HFlowContainer" type="HFlowContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+alignment = 2
+
+[node name="VisibilityButton" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/HFlowContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Toggle visibility"
+focus_mode = 0
+icon = ExtResource("3_nbnid")
+flat = true
+icon_alignment = 1
+script = ExtResource("5_woebg")
+on_icon = ExtResource("3_nbnid")
+off_icon = ExtResource("6_whj1i")
+
+[node name="MirrorButton" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/HFlowContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Toggle mirroring"
+focus_mode = 0
+icon = ExtResource("5_eoth1")
+flat = true
+icon_alignment = 1
+script = ExtResource("5_woebg")
+on_icon = ExtResource("5_eoth1")
+off_icon = ExtResource("5_eoth1")
+
+[node name="LockButton" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/HFlowContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Toggle locking for editing"
+focus_mode = 0
+icon = ExtResource("2_qoipp")
+flat = true
+icon_alignment = 1
+script = ExtResource("5_woebg")
+on_icon = ExtResource("2_qoipp")
+off_icon = ExtResource("9_wakke")
