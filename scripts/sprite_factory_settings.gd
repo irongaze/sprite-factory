@@ -54,6 +54,7 @@ static func _static_init():
     ProjectSettings.add_property_info({
       "name": name,
       "type": typeof(info.default),
+      "hint": PROPERTY_HINT_PLACEHOLDER_TEXT,
       "hint_string": info.get("desc", "no description")
     })
     # Advanced only?

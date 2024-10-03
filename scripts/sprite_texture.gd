@@ -6,7 +6,7 @@ class_name SpriteTexture extends RefCounted
 var model: SpriteModel
 
 # What type of texture we are
-var type: Sprite.Channel
+var type: FactorySprite.Channel
 
 # Layers in this channel
 var layers: Array[SpriteLayer]
@@ -81,8 +81,8 @@ func delete_layer(layer: SpriteLayer):
 
 # Helpers for cleaner code
 func is_diffuse():
-  return type == Sprite.Channel.DIFFUSE
+  return type == FactorySprite.Channel.DIFFUSE
 func is_normal():
-  return type == Sprite.Channel.NORMAL
+  return type == FactorySprite.Channel.NORMAL
 func is_emissive():
-  return type == Sprite.Channel.EMISSIVE
+  return type == FactorySprite.Channel.EMISSIVE

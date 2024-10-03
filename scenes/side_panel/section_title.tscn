@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dgto1cgm87w1b"]
 
-[ext_resource type="Script" path="res://addons/sprite_factory/scenes/section_title.gd" id="1_ue4bb"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/side_panel/section_title.gd" id="1_ue4bb"]
 
 [node name="SectionTitle" type="MarginContainer"]
 anchors_preset = 10

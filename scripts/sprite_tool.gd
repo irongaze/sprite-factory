@@ -29,7 +29,7 @@ func _on_mouse_move(pt): pass
 func _on_key(code, down):	pass
 
 # Override to be smarter about availability
-func _is_available():	return true
+func _is_available():	return SpriteEditor.model != null
 
 func on_pressed():
   if _is_available():

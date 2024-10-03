@@ -1,6 +1,5 @@
 Big changes
 
-- Rename Sprite to FactorySprite for clarity
 - Revamp code to avoid polluting global namespace by using preload('foo.gd') instead of class_name Foo
 
 Features
@@ -25,3 +24,6 @@ Features
 - Components
   - Add new ComponentLayer subclass of SpriteLayer
     - Attrs: offset, scale, rotation
+
+- Preview
+  - Auto-update whenever new files are created

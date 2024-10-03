@@ -11,12 +11,11 @@ func _ready():
   SpriteEditor.channel_changed.connect(on_channel_changed)
 
 func on_model_changed(model):
-  on_channel_changed(Sprite.Channel.DIFFUSE)
+  on_channel_changed(FactorySprite.Channel.DIFFUSE)
 
-func on_channel_changed(channel: Sprite.Channel):
+func on_channel_changed(channel: FactorySprite.Channel):
   var model = SpriteEditor.model
   if model != null:
     canvas.renderable = model.get_texture(channel)
   else:
     canvas.renderable = null
-

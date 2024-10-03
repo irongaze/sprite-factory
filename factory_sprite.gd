@@ -1,5 +1,5 @@
 @tool
-class_name Sprite extends Node
+class_name FactorySprite extends Node
 
 # Our 3 types of textures
 enum Channel {

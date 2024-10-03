@@ -1,0 +1,76 @@
+[gd_scene load_steps=6 format=3 uid="uid://p6f07tksxcjx"]
+
+[ext_resource type="PackedScene" uid="uid://cwe1an34mju3t" path="res://addons/sprite_factory/scenes/side_panel/palette_list.tscn" id="1_7whvh"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/side_panel/texture_tabs.gd" id="1_ilnrk"]
+[ext_resource type="PackedScene" uid="uid://bh3wq3bpbheq1" path="res://addons/sprite_factory/scenes/side_panel/layer_list.tscn" id="2_o45rh"]
+[ext_resource type="PackedScene" uid="uid://nlyiy0krtf0y" path="res://addons/sprite_factory/scenes/side_panel/normal_palette.tscn" id="4_akl0t"]
+[ext_resource type="PackedScene" uid="uid://dgto1cgm87w1b" path="res://addons/sprite_factory/scenes/side_panel/section_title.tscn" id="5_y5msa"]
+
+[node name="Sprite" type="Control"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+script = ExtResource("1_ilnrk")
+
+[node name="Diffuse" type="VBoxContainer" parent="VBoxContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="PaletteList" parent="VBoxContainer/TabContainer/Diffuse" instance=ExtResource("1_7whvh")]
+layout_mode = 2
+
+[node name="LayerList" parent="VBoxContainer/TabContainer/Diffuse" instance=ExtResource("2_o45rh")]
+layout_mode = 2
+
+[node name="Normal" type="VBoxContainer" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="NormalPalette" parent="VBoxContainer/TabContainer/Normal" instance=ExtResource("4_akl0t")]
+layout_mode = 2
+
+[node name="LayerList" parent="VBoxContainer/TabContainer/Normal" instance=ExtResource("2_o45rh")]
+layout_mode = 2
+channel = 1
+
+[node name="Emissive" type="VBoxContainer" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="PaletteList" parent="VBoxContainer/TabContainer/Emissive" instance=ExtResource("1_7whvh")]
+layout_mode = 2
+channel = 2
+
+[node name="LayerList" parent="VBoxContainer/TabContainer/Emissive" instance=ExtResource("2_o45rh")]
+layout_mode = 2
+channel = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SectionTitle" parent="VBoxContainer/VBoxContainer" instance=ExtResource("5_y5msa")]
+layout_mode = 2
+title = "Preview"
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2

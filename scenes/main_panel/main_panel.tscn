@@ -1,20 +1,20 @@
 [gd_scene load_steps=20 format=3 uid="uid://bdmvp4e3o6r4m"]
 
-[ext_resource type="Script" path="res://addons/sprite_factory/scripts/main_panel.gd" id="1_fmjr3"]
-[ext_resource type="Script" path="res://addons/sprite_factory/scripts/canvas_background.gd" id="2_d4j83"]
-[ext_resource type="Texture2D" uid="uid://c2l6k8wyuvj1d" path="res://addons/sprite_factory/icons/ToolSelect.svg" id="2_pss5e"]
-[ext_resource type="Texture2D" uid="uid://43s7nb5g5p0x" path="res://addons/sprite_factory/icons/ToolTriangle.svg" id="3_4v2et"]
-[ext_resource type="Script" path="res://addons/sprite_factory/scripts/select_tool.gd" id="3_lmjnw"]
-[ext_resource type="Script" path="res://addons/sprite_factory/scripts/render_canvas.gd" id="3_yqayd"]
-[ext_resource type="Texture2D" uid="uid://1aao14euqyjp" path="res://addons/sprite_factory/icons/ToolScale.svg" id="4_do8gv"]
-[ext_resource type="Script" path="res://addons/sprite_factory/scripts/draw_tool.gd" id="4_yf4u1"]
-[ext_resource type="Script" path="res://addons/sprite_factory/scripts/render_viewport.gd" id="5_n4mxf"]
-[ext_resource type="Script" path="res://addons/sprite_factory/scenes/canvas_input.gd" id="7_ccg8r"]
-[ext_resource type="Texture2D" uid="uid://bt54rgg1td16w" path="res://addons/sprite_factory/icons/SnapGrid.svg" id="7_ts5jn"]
-[ext_resource type="Texture2D" uid="uid://ctl4bug1fanlx" path="res://addons/sprite_factory/icons/Snap.svg" id="8_43rd8"]
-[ext_resource type="Texture2D" uid="uid://4bss3eo77fmd" path="res://addons/sprite_factory/icons/SnapLine.svg" id="8_r8rgt"]
-[ext_resource type="Texture2D" uid="uid://b2wae2bgukggx" path="res://addons/sprite_factory/icons/GuiTabMenuHl.svg" id="10_pq3o5"]
-[ext_resource type="PackedScene" uid="uid://3ksvlekcrqxx" path="res://addons/sprite_factory/scenes/palette_colors_window.tscn" id="15_inwv6"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scripts/main_panel.gd" id="1_ek4hc"]
+[ext_resource type="Texture2D" uid="uid://c2l6k8wyuvj1d" path="res://addons/sprite_factory/icons/ToolSelect.svg" id="2_xev72"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scripts/select_tool.gd" id="3_6dqbw"]
+[ext_resource type="Texture2D" uid="uid://43s7nb5g5p0x" path="res://addons/sprite_factory/icons/ToolTriangle.svg" id="4_n2yd7"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scripts/draw_tool.gd" id="5_orakk"]
+[ext_resource type="Texture2D" uid="uid://1aao14euqyjp" path="res://addons/sprite_factory/icons/ToolScale.svg" id="6_eqh72"]
+[ext_resource type="Texture2D" uid="uid://ctl4bug1fanlx" path="res://addons/sprite_factory/icons/Snap.svg" id="7_vnueo"]
+[ext_resource type="Texture2D" uid="uid://4bss3eo77fmd" path="res://addons/sprite_factory/icons/SnapLine.svg" id="8_q8pse"]
+[ext_resource type="Texture2D" uid="uid://bt54rgg1td16w" path="res://addons/sprite_factory/icons/SnapGrid.svg" id="9_j1r36"]
+[ext_resource type="Texture2D" uid="uid://b2wae2bgukggx" path="res://addons/sprite_factory/icons/GuiTabMenuHl.svg" id="10_yhaah"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scripts/canvas_background.gd" id="11_g3g3d"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scripts/render_canvas.gd" id="12_wkk28"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/main_panel/canvas_input.gd" id="13_hu65t"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scripts/render_viewport.gd" id="14_0smeh"]
+[ext_resource type="PackedScene" uid="uid://3ksvlekcrqxx" path="res://addons/sprite_factory/scenes/side_panel/palette_colors_window.tscn" id="15_c4rwf"]
 
 [sub_resource type="GDScript" id="GDScript_crvly"]
 script/source = "@tool
@@ -77,7 +77,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_fmjr3")
+script = ExtResource("1_ek4hc")
 
 [node name="MainLayout" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -97,10 +97,10 @@ focus_mode = 0
 disabled = true
 toggle_mode = true
 action_mode = 0
-icon = ExtResource("2_pss5e")
+icon = ExtResource("2_xev72")
 flat = true
 icon_alignment = 1
-script = ExtResource("3_lmjnw")
+script = ExtResource("3_6dqbw")
 
 [node name="DrawButton" type="Button" parent="MainLayout/Toolbar"]
 custom_minimum_size = Vector2(32, 32)
@@ -110,10 +110,10 @@ focus_mode = 0
 disabled = true
 toggle_mode = true
 action_mode = 0
-icon = ExtResource("3_4v2et")
+icon = ExtResource("4_n2yd7")
 flat = true
 icon_alignment = 1
-script = ExtResource("4_yf4u1")
+script = ExtResource("5_orakk")
 
 [node name="ScaleButton" type="Button" parent="MainLayout/Toolbar"]
 custom_minimum_size = Vector2(32, 32)
@@ -122,7 +122,7 @@ focus_mode = 0
 disabled = true
 toggle_mode = true
 action_mode = 0
-icon = ExtResource("4_do8gv")
+icon = ExtResource("6_eqh72")
 flat = true
 icon_alignment = 1
 
@@ -138,7 +138,7 @@ focus_mode = 0
 toggle_mode = true
 button_pressed = true
 action_mode = 0
-icon = ExtResource("8_43rd8")
+icon = ExtResource("7_vnueo")
 flat = true
 icon_alignment = 1
 script = SubResource("GDScript_crvly")
@@ -152,7 +152,7 @@ focus_mode = 0
 toggle_mode = true
 button_pressed = true
 action_mode = 0
-icon = ExtResource("8_r8rgt")
+icon = ExtResource("8_q8pse")
 flat = true
 icon_alignment = 1
 script = SubResource("GDScript_8tqpo")
@@ -166,7 +166,7 @@ focus_mode = 0
 toggle_mode = true
 button_pressed = true
 action_mode = 0
-icon = ExtResource("7_ts5jn")
+icon = ExtResource("9_j1r36")
 flat = true
 icon_alignment = 1
 script = SubResource("GDScript_fplgx")
@@ -180,7 +180,7 @@ layout_mode = 2
 focus_mode = 0
 disabled = true
 action_mode = 0
-icon = ExtResource("10_pq3o5")
+icon = ExtResource("10_yhaah")
 flat = true
 icon_alignment = 1
 
@@ -195,16 +195,16 @@ size_flags_vertical = 3
 
 [node name="CanvasBackground" type="Control" parent="MainLayout/PanelContainer/CanvasContainer"]
 layout_mode = 2
-script = ExtResource("2_d4j83")
+script = ExtResource("11_g3g3d")
 
 [node name="PrimaryCanvas" type="Control" parent="MainLayout/PanelContainer/CanvasContainer"]
 layout_mode = 2
-script = ExtResource("3_yqayd")
+script = ExtResource("12_wkk28")
 show_selection = true
 
 [node name="CanvasInput" type="Control" parent="MainLayout/PanelContainer/CanvasContainer"]
 layout_mode = 2
-script = ExtResource("7_ccg8r")
+script = ExtResource("13_hu65t")
 
 [node name="Footer" type="HBoxContainer" parent="MainLayout"]
 layout_mode = 2
@@ -216,7 +216,7 @@ text = "x: 12.2 | y: -29.0"
 [node name="RenderViewport" type="SubViewport" parent="."]
 disable_3d = true
 transparent_bg = true
-script = ExtResource("5_n4mxf")
+script = ExtResource("14_0smeh")
 
 [node name="RenderCanvas" type="Control" parent="RenderViewport"]
 layout_mode = 3
@@ -225,6 +225,6 @@ offset_left = 432.5
 offset_top = 35.0
 offset_right = 1567.5
 offset_bottom = 1170.0
-script = ExtResource("3_yqayd")
+script = ExtResource("12_wkk28")
 
-[node name="PaletteColorsWindow" parent="." instance=ExtResource("15_inwv6")]
+[node name="PaletteColorsWindow" parent="." instance=ExtResource("15_c4rwf")]

@@ -3,6 +3,18 @@
 @tool
 class_name SpriteModel extends RefCounted
 
+# Sprite we're editing
+var sprite: FactorySprite
+
+# 3 textures
+var diffuse: SpriteTexture
+var normal: SpriteTexture
+var emissive: SpriteTexture
+
+# Size in PX
+var size: int
+
+
 # Call with a Sprite node to get the model we
 # can use to edit it's look
 static func from(sprite):
@@ -10,44 +22,34 @@ static func from(sprite):
   var model = SpriteModel.new(sprite)
   return model
 
-# Sprite we're editing
-var sprite: Sprite
 
-# Size in PX
-var size: int
-
-# 3 textures
-var diffuse: SpriteTexture
-var normal: SpriteTexture
-var emissive: SpriteTexture
-
-func _init(new_sprite: Sprite):
+func _init(new_sprite: FactorySprite):
   # Capture the sprite
   assert(new_sprite != null)
   sprite = new_sprite
 
   # Set up our textures
   var tex_path = sprite.scene_file_path.replace('.tscn', '')
-  diffuse = SpriteTexture.new(self, Sprite.Channel.DIFFUSE, tex_path + '.png')
-  normal = SpriteTexture.new(self, Sprite.Channel.NORMAL, tex_path + '-n.png')
-  emissive = SpriteTexture.new(self, Sprite.Channel.EMISSIVE, tex_path + '-glow.png')
+  diffuse = SpriteTexture.new(self, FactorySprite.Channel.DIFFUSE, tex_path + '.png')
+  normal = SpriteTexture.new(self, FactorySprite.Channel.NORMAL, tex_path + '-n.png')
+  emissive = SpriteTexture.new(self, FactorySprite.Channel.EMISSIVE, tex_path + '-glow.png')
 
   # Load up our textures!
   load_all()
 
 # Get the texture resource of the given type
-func get_texture(type: Sprite.Channel):
+func get_texture(type: FactorySprite.Channel):
   match type:
-    Sprite.Channel.DIFFUSE: return diffuse
-    Sprite.Channel.NORMAL: return normal
-    Sprite.Channel.EMISSIVE: return emissive
+    FactorySprite.Channel.DIFFUSE: return diffuse
+    FactorySprite.Channel.NORMAL: return normal
+    FactorySprite.Channel.EMISSIVE: return emissive
 
 # True if this model uses the given channel (currently means "has layers")
-func export_texture(type: Sprite.Channel):
+func export_texture(type: FactorySprite.Channel):
   return get_texture(type).layers.size() > 0
 
 # Load the image from disk and return as a texture
-func load_texture_image(type: Sprite.Channel):
+func load_texture_image(type: FactorySprite.Channel):
   var tex = get_texture(type)
   var path = tex.file_path
   return load(path)

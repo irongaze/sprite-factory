@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bh3wq3bpbheq1"]
 
-[ext_resource type="Script" path="res://addons/sprite_factory/scenes/layer_list.gd" id="1_k7jeq"]
-[ext_resource type="PackedScene" uid="uid://dgto1cgm87w1b" path="res://addons/sprite_factory/scenes/section_title.tscn" id="2_ub50a"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/side_panel/layer_list.gd" id="1_k7jeq"]
+[ext_resource type="PackedScene" uid="uid://dgto1cgm87w1b" path="res://addons/sprite_factory/scenes/side_panel/section_title.tscn" id="2_ub50a"]
 [ext_resource type="Texture2D" uid="uid://ckxuklldwgljm" path="res://addons/sprite_factory/icons/ToolAddNode.svg" id="3_grhi3"]
 [ext_resource type="Texture2D" uid="uid://dg5p3b4ymaite" path="res://addons/sprite_factory/icons/ArrowUp.svg" id="4_dme8k"]
 [ext_resource type="Texture2D" uid="uid://lthqc2efldh2" path="res://addons/sprite_factory/icons/ArrowDown.svg" id="5_iev2o"]
@@ -67,6 +67,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.374139, 0.374139, 0.374139, 1)
 text = "no sprite selected"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -2,10 +2,10 @@
 extends VBoxContainer
 
 # Get scene refs
-const LayerWidget = preload("res://addons/sprite_factory/scenes/layer_widget.tscn")
+const LayerWidget = preload("res://addons/sprite_factory/scenes/side_panel/layer_widget.tscn")
 
 # The texture type we manage
-@export var channel: Sprite.Channel
+@export var channel: FactorySprite.Channel
 
 # Uplinks to model
 var model: SpriteModel

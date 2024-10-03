@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://keo8r8c0j26j"]
 
 [ext_resource type="Script" path="res://addons/sprite_factory/scripts/render_canvas.gd" id="1_jdy27"]
-[ext_resource type="Script" path="res://addons/sprite_factory/scenes/layer_widget.gd" id="1_wy043"]
-[ext_resource type="Script" path="res://addons/sprite_factory/scenes/inline_edit.gd" id="2_1hk2s"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/side_panel/layer_widget.gd" id="1_wy043"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/side_panel/inline_edit.gd" id="2_1hk2s"]
 [ext_resource type="Texture2D" uid="uid://2aar4mwbrrdq" path="res://addons/sprite_factory/icons/Lock.svg" id="2_qoipp"]
 [ext_resource type="Texture2D" uid="uid://cptx4l1qmkha5" path="res://addons/sprite_factory/icons/GuiVisibilityVisible.svg" id="3_nbnid"]
 [ext_resource type="Texture2D" uid="uid://cxx1ra6durhu1" path="res://addons/sprite_factory/icons/Panels2Alt.svg" id="5_eoth1"]
-[ext_resource type="Script" path="res://addons/sprite_factory/scenes/toggle_button.gd" id="5_woebg"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/main_panel/toggle_button.gd" id="5_woebg"]
 [ext_resource type="Texture2D" uid="uid://bo72lbh0vb8fv" path="res://addons/sprite_factory/icons/GuiVisibilityHidden.svg" id="6_whj1i"]
 [ext_resource type="Texture2D" uid="uid://b71md0c7hpc0p" path="res://addons/sprite_factory/icons/Unlock.svg" id="9_wakke"]
 
