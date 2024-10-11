@@ -14,7 +14,7 @@ script = ExtResource("1_k7jeq")
 
 [node name="LayersTitle" parent="." instance=ExtResource("2_ub50a")]
 layout_mode = 2
-title = "Layers"
+title = "Components"
 
 [node name="LayerButtons" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -24,7 +24,7 @@ layout_mode = 2
 focus_mode = 0
 theme_override_constants/h_separation = 6
 disabled = true
-text = "Add New"
+text = "Add"
 icon = ExtResource("3_grhi3")
 
 [node name="VSeparator" type="VSeparator" parent="LayerButtons"]

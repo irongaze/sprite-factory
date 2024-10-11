@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://p6f07tksxcjx"]
+[gd_scene load_steps=7 format=3 uid="uid://p6f07tksxcjx"]
 
 [ext_resource type="PackedScene" uid="uid://cwe1an34mju3t" path="res://addons/sprite_factory/scenes/side_panel/palette_list.tscn" id="1_7whvh"]
 [ext_resource type="Script" path="res://addons/sprite_factory/scenes/side_panel/texture_tabs.gd" id="1_ilnrk"]
 [ext_resource type="PackedScene" uid="uid://bh3wq3bpbheq1" path="res://addons/sprite_factory/scenes/side_panel/layer_list.tscn" id="2_o45rh"]
 [ext_resource type="PackedScene" uid="uid://nlyiy0krtf0y" path="res://addons/sprite_factory/scenes/side_panel/normal_palette.tscn" id="4_akl0t"]
 [ext_resource type="PackedScene" uid="uid://dgto1cgm87w1b" path="res://addons/sprite_factory/scenes/side_panel/section_title.tscn" id="5_y5msa"]
+[ext_resource type="PackedScene" uid="uid://tfss7gx32e5d" path="res://addons/sprite_factory/scenes/side_panel/preview_panel.tscn" id="6_x0h08"]
 
 [node name="Sprite" type="Control"]
 custom_minimum_size = Vector2(300, 0)
@@ -72,5 +73,5 @@ layout_mode = 2
 layout_mode = 2
 title = "Preview"
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/VBoxContainer"]
+[node name="PreviewContainer" parent="VBoxContainer/VBoxContainer" instance=ExtResource("6_x0h08")]
 layout_mode = 2

@@ -1,31 +1,32 @@
 @tool
-class_name SpriteShape extends SpriteComponent
+class_name SpriteShape extends RefCounted
 
 # Layer that owns us
 var layer: SpriteLayer
 
 # Shape's explicit color
-var color: Color
+var color: SpriteColor
 
 # Points that represent the shape
 var points: Array[SpritePoint]
 
+
 func _init(new_layer: SpriteLayer):
   layer = new_layer
   points = []
-  color = Color.ROYAL_BLUE
+  color = SpriteColor.new()
 
-func set_color(new_color: Color):
-  color = new_color
+
+func set_color(new_color: SpriteColor):
+  color.update(new_color)
   SpriteEditor.fire_model_changed()
+
 
 func add_point(loc):
   var pt = SpritePoint.new(self, loc.x, loc.y)
   points.append(pt)
   return pt
 
-func is_selected():
-  return SpriteEditor.selection.has_item(self)
 
 func load(data):
   points = []
@@ -34,6 +35,7 @@ func load(data):
     var pt = SpritePoint.new(self)
     pt.load(point_data)
     points.append(pt)
+
 
 func save():
   var data = {}
@@ -44,6 +46,7 @@ func save():
   data.points = point_data
 
   return data
+
 
 # Render ourselves to the provided target
 func render(canvas: RenderCanvas, mirror = false):
@@ -62,17 +65,18 @@ func render(canvas: RenderCanvas, mirror = false):
     # Fill polygon
     canvas.draw_colored_polygon(draw_points, draw_color)
 
-  # Show our points if we're selected
-  if canvas.show_selection && is_selected() && !mirror:
-    var radius = 5.0 / canvas.get_render_scale()
-    for pt in draw_points:
-      canvas.draw_circle(pt, radius, Color.WHITE)
-      canvas.draw_circle(pt, radius * 0.8, Color.BLACK)
+  ## Show our points if we're selected
+  #if canvas.show_selection && is_selected() && !mirror:
+    #var radius = 5.0 / canvas.get_render_scale()
+    #for pt in draw_points:
+      #canvas.draw_circle(pt, radius, Color.WHITE)
+      #canvas.draw_circle(pt, radius * 0.8, Color.BLACK)
 
   # Re-draw border as anti-aliased lines to add anti-aliasing to border and avoid
   # gaps between ideal polygons
 #	draw_points.append(draw_points[0]) # close shape
 #	canvas.draw_polyline(draw_points, draw_color, 0.2, true)
+
 
 # Returns this shape or null, based on whether the point passed is
 # inside the shape.
@@ -92,24 +96,21 @@ func hit_test(pt: Vector2):
   else:
     return null;
 
-func closest_point(pt: Vector2):
-  # Don't find points in the current selection, don't want to
-  # snap to ourselves
-  if is_selected(): return null
 
+func closest_point(pt: Vector2):
   # Run all points, find the best one
   var closest = null
   for test_pt in points:
-    if closest == null || SpritePoint.distance(pt, test_pt) < SpritePoint.distance(pt, closest):
-      closest = test_pt
+    # Don't find points in the current selection, don't want to
+    # snap to ourselves
+    if !test_pt.is_selected():
+      if closest == null || SpritePoint.distance(pt, test_pt) < SpritePoint.distance(pt, closest):
+        closest = test_pt
   return closest
+
 
 # Find the point closest to any of our segments
 func closest_line(pt):
-  # Don't find lines in the current selection, don't want to
-  # snap to ourselves
-  if is_selected(): return null
-
   var closest = null
   for i in range(points.size()):
     var test_pt = closest_segment(points[i], points[(i + 1) % points.size()], pt);
@@ -118,6 +119,7 @@ func closest_line(pt):
 
   # Return as vector if found
   return SpritePoint.vector(closest)
+
 
 # Returns the point on the given segment closest to the test point
 func closest_segment(ptA, ptB, test_pt):
@@ -130,10 +132,12 @@ func closest_segment(ptA, ptB, test_pt):
   if t >= 1.0: return ptB
   return Vector2(ptA.x + t * dx, ptA.y + t * dy);
 
+
 # Helper for hit testing.  Given three collinear points p, q, r, the function
 # checks if point q lies on line segment 'pr'.
 func on_segment(p, q, r):
   return q.x <= maxf(p.x, r.x) && q.x >= minf(p.x, r.x) && q.y <= maxf(p.y, r.y) && q.y >= minf(p.y, r.y)
+
 
 # To find orientation of ordered tripvar (p, q, r).
 # The function returns following values
@@ -150,6 +154,7 @@ func calc_orientation(p, q, r):
 
   # Clockwise or counterclockwise
   return 1 if val > 0 else 2
+
 
 # The main function that returns true if line segment 'p1q1'
 # and 'p2q2' intersect.

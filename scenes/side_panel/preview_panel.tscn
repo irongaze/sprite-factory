@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://tfss7gx32e5d"]
+
+[ext_resource type="Texture2D" uid="uid://ct4nddltyxuj0" path="res://addons/sprite_factory/assets/normal-palette-smooth.png" id="1_go4lm"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/side_panel/preview_panel.gd" id="1_lvqwj"]
+[ext_resource type="Texture2D" uid="uid://dkjgh73e46o1b" path="res://addons/sprite_factory/assets/normal-palette-facet.png" id="2_wvx5d"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_vknbh"]
+diffuse_texture = ExtResource("1_go4lm")
+normal_texture = ExtResource("2_wvx5d")
+
+[node name="PreviewContainer" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 300)
+size_flags_vertical = 3
+script = ExtResource("1_lvqwj")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+msaa_2d = 2
+size = Vector2i(2, 300)
+render_target_update_mode = 4
+
+[node name="PreviewLight" type="DirectionalLight2D" parent="SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+rotation = 94462.0
+height = 0.2
+
+[node name="PreviewRoot" type="Node2D" parent="SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+position = Vector2(0, 150)
+
+[node name="PreviewSprite" type="Sprite2D" parent="SubViewportContainer/SubViewport/PreviewRoot"]
+texture = SubResource("CanvasTexture_vknbh")

@@ -5,6 +5,12 @@ var name: String
 var color := Color()
 var brightness: float = 0.0
 
+func update(val: SpriteColor):
+  name = val.name
+  color = val.color
+  brightness = val.brightness
+  pass
+
 func to_color():
   if brightness >= 0.0:
     return color.lightened(brightness)

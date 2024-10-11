@@ -1,5 +1,5 @@
 @tool
-class_name SpriteLayer extends SpriteComponent
+class_name SpriteLayer extends RefCounted
 
 # Our owning texture
 var texture: SpriteTexture
@@ -124,4 +124,3 @@ func render(canvas: RenderCanvas):
 
 func calc_index():
   return texture.layers.find(self)
-
