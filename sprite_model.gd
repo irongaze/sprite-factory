@@ -58,7 +58,6 @@ func load_all():
   # Get any data from our sprite
   size = sprite.size
 
-
   # Get our data from the sprite's JSON
   var data = {}
   print("loading model:")
