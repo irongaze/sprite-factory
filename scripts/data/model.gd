@@ -1,25 +1,28 @@
-# Stores the editing data for a sprite, modified by the editor, saved
-# to disk as a resource
+## Stores the editing data for a sprite, modified by the editor, saved
+## to the sprite node as attributes and a JSON hash.
 @tool
-class_name SpriteModel extends RefCounted
+class_name FSModel extends RefCounted
 
 # Sprite we're editing
 var sprite: FactorySprite
 
-# 3 textures
-var diffuse: SpriteTexture
-var normal: SpriteTexture
-var emissive: SpriteTexture
-
 # Size in PX
 var size: int
+
+# Our list of components (which own our layers)
+var components : Array[FSComponent]
+
+# 3 textures
+var diffuse: FSTexture
+var normal: FSTexture
+var emissive: FSTexture
 
 
 # Call with a Sprite node to get the model we
 # can use to edit it's look
 static func from(sprite):
   assert(sprite != null)
-  var model = SpriteModel.new(sprite)
+  var model = FSModel.new(sprite)
   return model
 
 
@@ -30,29 +33,33 @@ func _init(new_sprite: FactorySprite):
 
   # Set up our textures
   var tex_path = sprite.scene_file_path.replace('.tscn', '')
-  diffuse = SpriteTexture.new(self, FactorySprite.Channel.DIFFUSE, tex_path + '.png')
-  normal = SpriteTexture.new(self, FactorySprite.Channel.NORMAL, tex_path + '-n.png')
-  emissive = SpriteTexture.new(self, FactorySprite.Channel.EMISSIVE, tex_path + '-glow.png')
+  diffuse = FSTexture.new(self, FS.Channel.DIFFUSE, tex_path + '.png')
+  normal = FSTexture.new(self, FS.Channel.NORMAL, tex_path + '-n.png')
+  emissive = FSTexture.new(self, FS.Channel.EMISSIVE, tex_path + '-glow.png')
 
   # Load up our textures!
   load_all()
 
-# Get the texture resource of the given type
-func get_texture(type: FactorySprite.Channel):
+
+# Get the texture of the given type
+func get_texture(type: FS.Channel):
   match type:
-    FactorySprite.Channel.DIFFUSE: return diffuse
-    FactorySprite.Channel.NORMAL: return normal
-    FactorySprite.Channel.EMISSIVE: return emissive
+    FS.Channel.DIFFUSE: return diffuse
+    FS.Channel.NORMAL: return normal
+    FS.Channel.EMISSIVE: return emissive
+
 
 # True if this model uses the given channel (currently means "has layers")
-func export_texture(type: FactorySprite.Channel):
+func export_texture(type: FS.Channel):
   return get_texture(type).layers.size() > 0
 
+
 # Load the image from disk and return as a texture
-func load_texture_image(type: FactorySprite.Channel):
+func load_texture_image(type: FS.Channel):
   var tex = get_texture(type)
   var path = tex.file_path
   return load(path)
+
 
 func load_all():
   # Get any data from our sprite

@@ -1,32 +1,30 @@
+## A collection of shapes within a component, for a given channel.
 @tool
-class_name SpriteLayer extends RefCounted
+class_name FSLayer extends RefCounted
 
 # Our owning texture
-var texture: SpriteTexture
+var texture: FSTexture
 
 # Our layer name
 var name: String
 
 # Do we auto-mirror our shapes
-var mirror: bool
+var mirror := true
 # Are we locked for editing
-var locked: bool
+var locked := false
 # Are we visible
-var hidden: bool
+var hidden := false
 
 # Array of shapes we contain
-var shapes: Array[SpriteShape]
+var shapes : Array[FSShape]
 
-func _init(new_tex: SpriteTexture):
+
+func _init(new_tex: FSTexture):
   texture = new_tex
   shapes = []
 
-  mirror = true
-  locked = false
-  hidden = false
-
 func add_shape():
-  var shape = SpriteShape.new(self)
+  var shape = FSShape.new(self)
   shapes.append(shape)
   return shape
 
@@ -77,17 +75,17 @@ func closest_line(pt):
 
 func load(data):
   # Get our core info
-  name = data.get('name')
-  mirror = data.get('mirror', true)
-  locked = data.get('locked', false)
-  hidden = data.get('hidden', false)
+  name = data.get_val('name')
+  mirror = data.get_val('mirror', true)
+  locked = data.get_val('locked', false)
+  hidden = data.get_val('hidden', false)
 
   # Load up our shapes
   shapes = []
   var shapes_list = data.get('shapes', [])
   for shape_data in shapes_list:
     # Load the new shape
-    var shape = SpriteShape.new(self)
+    var shape = FSShape.new(self)
     shape.load(shape_data)
     # Validate it
     if shape.points.size() >= 3:

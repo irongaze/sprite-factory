@@ -1,12 +1,12 @@
 @tool
-class_name SpritePoint extends RefCounted
+class_name FSPoint extends RefCounted
 
 # Parent
-var shape: SpriteShape
+var shape : FSShape
 
 # Data
-var x: float
-var y: float
+var x : float
+var y : float
 
 
 # Distance between two points, accepts Vector2 and SpritePoint
@@ -22,29 +22,29 @@ static func vector(val):
   return val.to_vector()
 
 
-func _init(parent: SpriteShape, nx = 0.0, ny = 0.0):
+func _init(parent: FSShape, nx = 0.0, ny = 0.0):
   shape = parent
   x = nx
   y = ny
 
 
-func is_selected():
-  return SpriteEditor.selection.has_item(self)
-
-
-func select():
-  SpriteEditor.selection.set_to(self)
-
-
-func deselect():
-  SpriteEditor.selection.remove(self)
-
-
-func toggle_selection():
-  if is_selected():
-    deselect()
-  else:
-    select()
+#func is_selected():
+  #return SpriteEditor.selection.has_item(self)
+#
+#
+#func select():
+  #SpriteEditor.selection.set_to(self)
+#
+#
+#func deselect():
+  #SpriteEditor.selection.remove(self)
+#
+#
+#func toggle_selection():
+  #if is_selected():
+    #deselect()
+  #else:
+    #select()
 
 
 func update(loc):

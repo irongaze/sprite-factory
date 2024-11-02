@@ -1,29 +1,31 @@
+## Data model for a shape - a set of points + color that
+## draws a polygon in one of our channels.
 @tool
-class_name SpriteShape extends RefCounted
+class_name FSShape extends RefCounted
 
 # Layer that owns us
-var layer: SpriteLayer
-
-# Shape's explicit color
-var color: SpriteColor
+var layer : FSLayer
 
 # Points that represent the shape
-var points: Array[SpritePoint]
+var points : Array[FSPoint]
+
+# Shape's explicit color
+var color : FSColor
 
 
-func _init(new_layer: SpriteLayer):
+func _init(new_layer: FSLayer):
   layer = new_layer
   points = []
-  color = SpriteColor.new()
+  color = FSColor.new()
 
 
-func set_color(new_color: SpriteColor):
+func set_color(new_color: FSColor):
   color.update(new_color)
   SpriteEditor.fire_model_changed()
 
 
 func add_point(loc):
-  var pt = SpritePoint.new(self, loc.x, loc.y)
+  var pt = FSPoint.new(self, loc.x, loc.y)
   points.append(pt)
   return pt
 
@@ -32,12 +34,12 @@ func load(data):
   points = []
   var points_list = data.get('points', [])
   for point_data in points_list:
-    var pt = SpritePoint.new(self)
+    var pt = FSPoint.new(self)
     pt.load(point_data)
     points.append(pt)
 
 
-func save():
+func to_data():
   var data = {}
 
   var point_data = []

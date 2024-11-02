@@ -8,10 +8,10 @@ func on_tab_changed(index):
   var name = get_tab_title(index)
   match(name):
     "Diffuse":
-      SpriteEditor.select_channel(FactorySprite.Channel.DIFFUSE)
+      SpriteEditor.select_channel(FS.Channel.DIFFUSE)
     "Normal":
-      SpriteEditor.select_channel(FactorySprite.Channel.NORMAL)
+      SpriteEditor.select_channel(FS.Channel.NORMAL)
     "Emissive":
-      SpriteEditor.select_channel(FactorySprite.Channel.EMISSIVE)
+      SpriteEditor.select_channel(FS.Channel.EMISSIVE)
     _:
       print("UNKNOWN TAB: " + name)

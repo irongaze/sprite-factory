@@ -26,7 +26,7 @@ static var tool_changed: Signal:
   get: return instance._tool_changed
 
 # When fired, the channel we're working on has changed
-signal _channel_changed(channel: FactorySprite.Channel)
+signal _channel_changed(channel: FS.Channel)
 static var channel_changed: Signal:
   get: return instance._channel_changed
 
@@ -36,7 +36,7 @@ static var layer_changed: Signal:
   get: return instance._layer_changed
 
 # When fired, a new color has been selected for the given channel
-signal _color_changed(color: Color, channel: FactorySprite.Channel)
+signal _color_changed(color: Color, channel: FS.Channel)
 static var color_changed: Signal:
   get: return instance._color_changed
 
@@ -52,7 +52,7 @@ static var ui_changed: Signal:
 static var model: SpriteModel
 
 # Which channel we're editing
-static var channel := FactorySprite.Channel.DIFFUSE
+static var channel := FS.Channel.DIFFUSE
 
 # Currently selected layer
 static var layer: SpriteLayer
@@ -90,7 +90,7 @@ static func select_tool(new_tool: SpriteTool):
   SpriteEditor.tool_changed.emit(tool)
 
 
-static func select_channel(new_channel: FactorySprite.Channel):
+static func select_channel(new_channel: FS.Channel):
   # Reset our selection
   selection.clear()
 
@@ -134,7 +134,7 @@ static func hit_test(pt):
 static func closest_point(pt):
   if model == null: return null
   var closest = null
-  for ch in FactorySprite.Channel.values():
+  for ch in FS.Channel.values():
     var tex = model.get_texture(ch)
     if tex != null:
       # Find closes point
@@ -149,7 +149,7 @@ static func closest_point(pt):
 static func closest_line(pt):
   if model == null: return null
   var closest = null
-  for ch in FactorySprite.Channel.values():
+  for ch in FS.Channel.values():
     var tex = model.get_texture(ch)
     if tex != null:
       # Find closes point to a line

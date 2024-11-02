@@ -1,4 +1,4 @@
-## Base class for our various tools - select, draw, etc.
+## Base class for our various tools - draw, modify, etc.
 @tool
 class_name SpriteTool extends Button
 

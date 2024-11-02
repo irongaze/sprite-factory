@@ -1,21 +1,23 @@
-# Represents a texture in a sprite
+## Represents a texture in a sprite, i.e. the collection of layers from each
+## component, rendered down into a PNG.  Does not own data!  Acts as a facade
+## over the various components + layers in the main model.
 @tool
-class_name SpriteTexture extends RefCounted
+class_name FSTexture extends RefCounted
 
 # Our owning model
-var model: SpriteModel
+var model : FSModel
 
 # What type of texture we are
-var type: FactorySprite.Channel
+var type : FS.Channel
 
 # Layers in this channel
-var layers: Array[SpriteLayer]
+var layers : Array[FSLayer]
 
 # Where to save/load this texture
 var file_path
 
 # Constructor
-func _init(new_model: SpriteModel, new_type = 0, new_path = ''):
+func _init(new_model: FSModel, new_type = 0, new_path = ''):
   model = new_model
   type = new_type
   file_path = new_path
@@ -55,7 +57,7 @@ func load(data):
   # Load up and instantiate our layers
   var layers_list = data.get('layers', [])
   for layer_data in layers_list:
-    var layer = SpriteLayer.new(self)
+    var layer = FSLayer.new(self)
     layer.load(layer_data)
     layers.append(layer)
 
@@ -81,8 +83,8 @@ func delete_layer(layer: SpriteLayer):
 
 # Helpers for cleaner code
 func is_diffuse():
-  return type == FactorySprite.Channel.DIFFUSE
+  return type == FS.Channel.DIFFUSE
 func is_normal():
-  return type == FactorySprite.Channel.NORMAL
+  return type == FS.Channel.NORMAL
 func is_emissive():
-  return type == FactorySprite.Channel.EMISSIVE
+  return type == FS.Channel.EMISSIVE

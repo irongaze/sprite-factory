@@ -1,29 +1,50 @@
 Big changes
 
-- Revamp code to avoid polluting global namespace by using preload('foo.gd') instead of class_name Foo
+- Revamp code to avoid polluting global namespace by using prefix 'FS' in all class names (e.g. FSModel instead of SpriteModel)
+- Revamp textures to be facades over model component's layers
 
 Features
 
 - Global color palette
   - Stored in settings as Data
     - key + hex
-  - Shapes have SpriteColor
+  - FSShapes have FSColor
     - stores color key, last color applied (so we can render even if key disappears)
     - consider adding brighten/darken val (i.e. use 'red' at 20% brighten)
   - Build palette widget that displays colors, shows cur selection, always has selection
 
 - Tools
-  - Add/Remove Point - add on line segment, remove on point
-  - Offset - move around
-  - Rotate - rotate around ???
-  - Scale - scale around ???
+    - Draw - creates new shape, adds points
+    - Modify - click point to drag it, ctrl-click to add on segment + drag, shift-click to remove point
+    - Move - move shape around, shift-click to add/remove shapes to selection
+    - Rotate - rotate shape around, ctrl-click to set center
+    - Scale - scale shape around, ctrl-click to set center
+
+- Model
+  - Has pixel size in power of 2
+  - Owns list of components
+  - May have a template image
+    - Image has path, scale, offset
+
+- Component
+  - One shared list for model
+  - Has 3 layers, one for each channel
+- ExternalComponent
+  - Component subclass
+  - Path to ??? (scene file??? json component export?)
+  - Attrs: offset, scale, rotation
+
+- Texture
+  - Logical grouping of all layers in all components for a given channel
+  - Doesn't own data - facades model components into synthetic list of
 
 - Selection
-  - points, lines, shapes, components
-
-- Components
-  - Add new ComponentLayer subclass of SpriteLayer
-    - Attrs: offset, scale, rotation
+  - Active model - select FactorySprite node to change
+  - Active channel - click tab to change
+  - Active component - click component to change
+  - Active layer (implied by channel + component)
+  - 0-n shapes in active component + channel (managed by tools)
+  - Ctrl-A selects all shapes in active layer
 
 - Preview
   - Auto-update whenever new files are created

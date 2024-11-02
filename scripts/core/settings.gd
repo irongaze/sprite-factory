@@ -1,7 +1,7 @@
 ## Manages per-project settings for the Sprite Factory.  Settings are stored in
 ## the ProjectSettings system (aka the project.godot file & project settings dialog).
 @tool
-class_name SpriteFactorySettings extends RefCounted
+class_name FSSettings extends RefCounted
 
 # Our supported settings meta-data.  Supports:
 #
@@ -10,25 +10,27 @@ class_name SpriteFactorySettings extends RefCounted
 #  desc: Description for tooltip in project settings dialog (optional)
 #  advanced: true to hide by default (optional, default false)
 #  internal: true to hide always (optional, default false)
+#
 const SETTINGS = {
   "grid_size": {
     "name": "ui/grid_size",
     "default": 4.0,
     "desc": "Spacing of the snap-grid in pixels",
   },
-  "color_palette": {
-    "name": "colors/palette",
-    "default": "{\"palette\": []}",
-    "desc": "Keyed color palette used when editing sprites",
+  "color_palettes": {
+    "name": "colors/palettes",
+    "default": "{\"palettes\": {}}",
+    "desc": "Keyed color palettes used when editing sprites",
     "internal": true,
   }
 }
 
 
-## Spacing of snap-grid in pixels
+# Spacing of snap-grid in pixels
 static var grid_size: float :
   get: return get_setting("grid_size")
   set(val): set_setting("grid_size", val)
+
 
 # When fired, the selection has changed
 signal _changed()
@@ -37,7 +39,7 @@ static var changed: Signal:
 
 
 # Global instance to hold our static signals
-static var instance := SpriteFactorySettings.new()
+static var instance := FSSettings.new()
 
 
 # Setup meta-data for our various settings on load
