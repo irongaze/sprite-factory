@@ -1,6 +1,6 @@
 ## Base class for our various tools - draw, modify, etc.
 @tool
-class_name SpriteTool extends Button
+class_name FSTool extends Button
 
 # Initialize our state
 func _ready():
@@ -8,18 +8,17 @@ func _ready():
   pressed.connect(on_pressed)
 
   # Tie into our various editor signals
-  SpriteEditor.model_changed.connect(on_model_changed)
-  SpriteEditor.layer_changed.connect(on_layer_changed)
-  SpriteEditor.selection_changed.connect(on_selection_changed)
-  SpriteEditor.tool_changed.connect(on_tool_changed)
+  FS.model_changed.connect(on_model_changed)
+  FS.component_changed.connect(on_component_changed)
+  #FS.tool_changed.connect(on_tool_changed)
 
   # Do an initial UI refresh
   update_ui()
 
 # Override to handle the given events
 func _on_model_changed(model): pass
-func _on_layer_changed(layer): pass
-func _on_selection_changed(): pass
+func _on_component_changed(layer): pass
+#func _on_selection_changed(): pass
 func _on_tool_changed(model): pass
 func _on_any_changed(): pass
 
@@ -29,11 +28,11 @@ func _on_mouse_move(pt): pass
 func _on_key(code, down):	pass
 
 # Override to be smarter about availability
-func _is_available():	return SpriteEditor.model != null
+func _is_available():	return FS.model != null
 
 func on_pressed():
   if _is_available():
-    SpriteEditor.select_tool(self)
+    FS.editor.select_tool(self)
 
 # Dispatch callbacks & update UI
 func on_model_changed(model):
@@ -42,8 +41,8 @@ func on_model_changed(model):
   update_ui()
 
 # Dispatch callbacks & update UI
-func on_layer_changed(layer):
-  _on_layer_changed(layer)
+func on_component_changed():
+  _on_component_changed(layer)
   _on_any_changed()
   update_ui()
 

@@ -27,7 +27,7 @@ func get_canvas_size():
   return float(get_size().x)
 
 func get_sprite_size():
-  var model = SpriteEditor.model
+  var model = FS.model
   if model:
     return float(model.size)
   else:
@@ -38,26 +38,27 @@ func get_render_scale():
 
 # Custom draw function
 func _draw():
-  # Get some info
-  var scale = get_scale()
-
   # Do we need to fill the background?
   if bg_color != null && bg_color.a > 0:
     reset_transform()
     draw_rect(Rect2(Vector2.ZERO, get_size()), bg_color, true)
 
-  if SpriteEditor.model:
+  if FS.model:
     # Prep for drawing by putting 0,0 at the center of the control and
-    # scaling to match our sprite
+    # scaling to match our model's pixel dimensions
     set_transform()
 
+    # Can't render if there's nothing TO render...
     if renderable:
       renderable.render(self)
 
 func reset_transform():
+  # Reset to origin at top-left, scale = 1.0
   draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
 
 func set_transform(mirrored = false):
+  # Set transform to have origin in middle of control, with
+  # scale set so that the edge of the sprite is at the edge of the control.
   var cur_scale = get_render_scale()
   var xscale = -cur_scale if mirrored else cur_scale
   draw_set_transform(get_size() / 2, 0, Vector2(xscale, cur_scale))

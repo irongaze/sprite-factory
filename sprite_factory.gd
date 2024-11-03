@@ -1,3 +1,5 @@
+## Entry point for the plugin, manages setting up our various panels and registering
+## custom types and whatnot.
 @tool
 class_name SpriteFactory extends EditorPlugin
 
@@ -8,9 +10,6 @@ var main_panel
 # Holds our layer dock (right tab)
 const LayerPanel = preload("res://addons/sprite_factory/scenes/side_panel/layer_panel.tscn")
 var layer_panel
-
-# Holds our preview dock (top left tab)
-#var preview_panel
 
 var selection = []
 
@@ -27,13 +26,13 @@ func _enter_tree():
   _make_visible(false)
 
   # Add our custom node/resource type
-  add_custom_type('Sprite Model', 'Resource', preload("res://addons/sprite_factory/sprite_model.gd"), preload("res://addons/sprite_factory/icons/ToolTriangle.svg"))
+  #add_custom_type('Sprite Model', 'Resource', preload("res://addons/sprite_factory/scripts/data/model.gd"), preload("res://addons/sprite_factory/icons/ToolTriangle.svg"))
   add_custom_type('Factory Sprite', 'Node2D', preload("res://addons/sprite_factory/factory_sprite.gd"), preload("res://addons/sprite_factory/icons/Sprite.svg"))
 
   # Listen for project settings changes
   project_settings_changed.connect(func():
     print('settings changed!!!')
-    SpriteFactorySettings.changed.emit()
+    FSSettings.changed.emit()
   )
 
 # Clean-up of the plugin goes here.
@@ -46,8 +45,8 @@ func _exit_tree():
   layer_panel.queue_free()
 
   # Remove our custom node/resource types
-  remove_custom_type("Sprite")
-  remove_custom_type("SpriteResource")
+  remove_custom_type("Factory Sprite")
+  #remove_custom_type("SpriteResource")
 
 func _has_main_screen():
   return true
@@ -106,7 +105,7 @@ func edit_node(node):
   # Extract the model from the node if it's a Sprite
   var model = null
   if node != null and node is FactorySprite:
-    model = SpriteModel.from(node)
+    model = FSModel.from(node)
   # And edit it!
   SpriteEditor.edit_model(model)
 

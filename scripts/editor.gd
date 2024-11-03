@@ -1,69 +1,17 @@
-# Master class that manages editing process internals.  Implemented
-# as a set of static state, functions, and signals.  Manages
-# current selections.
+## Master class that manages editing process internals.  Implemented
+## as a set of static state, functions, and signals.  Manages
+## current selections.
 @tool
-class_name SpriteEditor extends RefCounted
+class_name FSEditor extends RefCounted
 
-# Singleton to hold our signals
-static var instance = SpriteEditor.new()
+# Signals - use FS.foo.connect instead, see there for comments
+signal model_changed()
+signal channel_changed()
+signal component_changed()
+signal data_changed()
+signal ui_changed()
 
-
-# Signals
-
-# When fired, the model's data has changed
-signal _model_changed(model: SpriteModel)
-static var model_changed: Signal:
-  get: return instance._model_changed
-
-# When fired, the selection has changed
-signal _selection_changed()
-static var selection_changed: Signal:
-  get: return instance._selection_changed
-
-# When fired, the selection has changed
-signal _tool_changed(tool: SpriteTool)
-static var tool_changed: Signal:
-  get: return instance._tool_changed
-
-# When fired, the channel we're working on has changed
-signal _channel_changed(channel: FS.Channel)
-static var channel_changed: Signal:
-  get: return instance._channel_changed
-
-# When fired, the layer we're working on has changed
-signal _layer_changed(layer: SpriteLayer)
-static var layer_changed: Signal:
-  get: return instance._layer_changed
-
-# When fired, a new color has been selected for the given channel
-signal _color_changed(color: Color, channel: FS.Channel)
-static var color_changed: Signal:
-  get: return instance._color_changed
-
-# When fired, the UI needs to update
-signal _ui_changed()
-static var ui_changed: Signal:
-  get: return instance._ui_changed
-
-
-# Current selections
-
-# Sprite model we're editing
-static var model: SpriteModel
-
-# Which channel we're editing
-static var channel := FS.Channel.DIFFUSE
-
-# Currently selected layer
-static var layer: SpriteLayer
-
-# Currently selected tool
-static var tool: SpriteTool
-
-# Seleted elements
-static var selection = SpriteSelection.new()
-
-# UI State
+# UI State - move to FSSettings?
 static var snap_point := true
 static var snap_line := true
 static var snap_grid := true
@@ -74,15 +22,15 @@ static func edit_model(new_model):
   # Reset our state
   selection.clear()
   select_layer(null)
-  model = new_model
+  FS.model = new_model
 
   # Force a rebuild of the UI
   fire_model_changed()
 
 
 static func save_model():
-  if model != null:
-    model.save_all()
+  if FS.model != null:
+    FS.model.save_all()
 
 
 static func select_tool(new_tool: SpriteTool):
@@ -141,7 +89,7 @@ static func closest_point(pt):
       var test_pt = tex.closest_point(pt)
       if test_pt != null:
         # See if it's the new best option
-        if closest == null || SpritePoint.distance(pt, test_pt) < SpritePoint.distance(pt, closest):
+        if closest == null || FSPoint.distance(pt, test_pt) < FSPoint.distance(pt, closest):
           closest = test_pt
   return closest
 
@@ -156,6 +104,6 @@ static func closest_line(pt):
       var test_pt = tex.closest_line(pt)
       if test_pt != null:
         # See if it's the new best option
-        if closest == null || SpritePoint.distance(pt, test_pt) < SpritePoint.distance(pt, closest):
+        if closest == null || FSPoint.distance(pt, test_pt) < FSPoint.distance(pt, closest):
           closest = test_pt
   return closest
