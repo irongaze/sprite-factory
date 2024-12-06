@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://3ksvlekcrqxx"]
 
-[ext_resource type="Script" path="res://addons/sprite_factory/scenes/side_panel/palette_colors_window.gd" id="1_a70xw"]
+[ext_resource type="Script" path="res://addons/sprite_factory/scenes/side_panel/edit_palette_window.gd" id="1_b5p6n"]
 
 [node name="PaletteColorsWindow" type="Window"]
 title = "Palette Colors"
@@ -9,7 +9,7 @@ size = Vector2i(400, 600)
 visible = false
 transient = true
 popup_window = true
-script = ExtResource("1_a70xw")
+script = ExtResource("1_b5p6n")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

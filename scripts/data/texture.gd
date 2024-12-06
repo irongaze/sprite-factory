@@ -10,18 +10,30 @@ var model : FSModel
 # What type of texture we are
 var type : FS.Channel
 
-# Layers in this channel
-var layers : Array[FSLayer]
+# Layers in this texture's channel, cached, owned by components
+var layers : Array
 
 # Where to save/load this texture
 var file_path
 
+# Possibly helpful code snippet for once we're trying to dynamically
+# update preview after save...
+#var tex = $SubViewport.get_texture()
+#level_image.texture_normal = tex
+#tex.get_image().save_png(singleton.capture_path + ".png")
+
+
 # Constructor
-func _init(new_model: FSModel, new_type = 0, new_path = ''):
-  model = new_model
+func _init(parent : FSModel, new_type = 0, new_path = ''):
+  model = parent
   type = new_type
   file_path = new_path
-  layers = []
+  set_layers([])
+
+
+func set_layers(list : Array):
+  layers = list
+
 
 func hit_test(pt):
   # Run layers from top to bottom
@@ -31,6 +43,7 @@ func hit_test(pt):
     if found != null: return found
   return null
 
+
 func closest_point(pt):
   var closest = null
   for layer in layers:
@@ -38,9 +51,10 @@ func closest_point(pt):
     var test_pt = layer.closest_point(pt)
     if test_pt != null:
       # See if it's the new best option
-      if closest == null || SpritePoint.distance(pt, test_pt) < SpritePoint.distance(pt, closest):
+      if closest == null || FSPoint.distance(pt, test_pt) < FSPoint.distance(pt, closest):
         closest = test_pt
   return closest
+
 
 func closest_line(pt):
   var closest = null
@@ -49,37 +63,17 @@ func closest_line(pt):
     var test_pt = layer.closest_line(pt)
     if test_pt != null:
       # See if it's the new best option
-      if closest == null || SpritePoint.distance(pt, test_pt) < SpritePoint.distance(pt, closest):
+      if closest == null || FSPoint.distance(pt, test_pt) < FSPoint.distance(pt, closest):
         closest = test_pt
   return closest
 
-func load(data):
-  # Load up and instantiate our layers
-  var layers_list = data.get('layers', [])
-  for layer_data in layers_list:
-    var layer = FSLayer.new(self)
-    layer.load(layer_data)
-    layers.append(layer)
-
-func save():
-  # Build our data hash
-  var data = {}
-
-  # Add in our layer info
-  data.layers = []
-  for layer in layers:
-    data.layers.append(layer.save())
-
-  # And return it!
-  return data
 
 func render(canvas: RenderCanvas):
+  # Invert order for proper z-order
   for i in range(layers.size()-1, -1, -1):
     var layer = layers[i]
     layer.render(canvas)
 
-func delete_layer(layer: SpriteLayer):
-  layers.remove_at(layers.find(layer))
 
 # Helpers for cleaner code
 func is_diffuse():

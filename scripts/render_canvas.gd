@@ -1,6 +1,7 @@
 @tool
 class_name RenderCanvas extends Control
 
+
 # Color to paint background, used when doing layer thumbnails etc
 @export var bg_color := Color.TRANSPARENT
 
@@ -17,14 +18,18 @@ var renderable = null
 # Is this a thumbnail/canvas in editor, or for export as a png?
 var is_export = false
 
+
 func _process(delta):
   queue_redraw()
+
 
 func set_renderable(new_renderable):
   renderable = new_renderable
 
+
 func get_canvas_size():
   return float(get_size().x)
+
 
 func get_sprite_size():
   var model = FS.model
@@ -33,8 +38,10 @@ func get_sprite_size():
   else:
     return 128.0
 
+
 func get_render_scale():
   return get_canvas_size() / get_sprite_size()
+
 
 # Custom draw function
 func _draw():
@@ -52,9 +59,11 @@ func _draw():
     if renderable:
       renderable.render(self)
 
+
 func reset_transform():
   # Reset to origin at top-left, scale = 1.0
   draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
+
 
 func set_transform(mirrored = false):
   # Set transform to have origin in middle of control, with
@@ -62,6 +71,7 @@ func set_transform(mirrored = false):
   var cur_scale = get_render_scale()
   var xscale = -cur_scale if mirrored else cur_scale
   draw_set_transform(get_size() / 2, 0, Vector2(xscale, cur_scale))
+
 
 #func with_native_scale(fn: Callable):
 #	var transform = get_transform()

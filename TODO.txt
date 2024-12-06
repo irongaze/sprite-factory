@@ -1,7 +1,13 @@
-Big changes
-
-- Revamp code to avoid polluting global namespace by using prefix 'FS' in all class names (e.g. FSModel instead of SpriteModel)
-- Revamp textures to be facades over model component's layers
+To-Dos
+- Get Draw tool working
+- Get Modify tool working
+- Add palette to settings
+- Build palette control
+- Build off-screen renderers for all 3 textures
+- Get preview working
+- Make FactorySprite show textures
+- Get export working
+- Sort out where texture PNGs go
 
 Features
 
@@ -26,6 +32,10 @@ Features
   - May have a template image
     - Image has path, scale, offset
 
+- Texture
+  - Logical grouping of layers in all components for a given channel
+  - Doesn't own data - facades model components into synthetic list of layers
+
 - Component
   - One shared list for model
   - Has 3 layers, one for each channel
@@ -33,10 +43,6 @@ Features
   - Component subclass
   - Path to ??? (scene file??? json component export?)
   - Attrs: offset, scale, rotation
-
-- Texture
-  - Logical grouping of all layers in all components for a given channel
-  - Doesn't own data - facades model components into synthetic list of
 
 - Selection
   - Active model - select FactorySprite node to change
@@ -47,4 +53,13 @@ Features
   - Ctrl-A selects all shapes in active layer
 
 - Preview
-  - Auto-update whenever new files are created
+  - Auto-update whenever data changes
+
+- Export
+  - On scene save (NOTIFICATION_EDITOR_POST_SAVE), save out PNGs for each texture
+  - Also update texture of FactorySprite as well
+
+- FactorySprite
+  - Contains JSON of model
+  - Script auto-loads textures for diffuse & normal into sprite
+  - Script auto-adds & manages child sprite with emissive texture

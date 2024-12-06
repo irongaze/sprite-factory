@@ -7,15 +7,11 @@ var canvas: RenderCanvas
 func _ready():
   canvas = find_child('PrimaryCanvas')
 
-  SpriteEditor.model_changed.connect(on_model_changed)
-  SpriteEditor.channel_changed.connect(on_channel_changed)
+  FS.model_changed.connect(update_renderable)
+  FS.channel_changed.connect(update_renderable)
 
-func on_model_changed(model):
-  on_channel_changed(FS.Channel.DIFFUSE)
-
-func on_channel_changed(channel: FS.Channel):
-  var model = SpriteEditor.model
-  if model != null:
-    canvas.renderable = model.get_texture(channel)
+func update_renderable():
+  if FS.model != null:
+    canvas.renderable = FS.model.get_texture(FS.channel)
   else:
     canvas.renderable = null

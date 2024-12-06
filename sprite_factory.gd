@@ -13,8 +13,9 @@ var layer_panel
 
 var selection = []
 
+
 func _enter_tree():
-  # Add layers
+  # Add layer panel to the right (inspector) dock
   layer_panel = LayerPanel.instantiate()
   add_control_to_dock(EditorPlugin.DOCK_SLOT_RIGHT_UL, layer_panel)
 
@@ -35,6 +36,7 @@ func _enter_tree():
     FSSettings.changed.emit()
   )
 
+
 # Clean-up of the plugin goes here.
 func _exit_tree():
   # Remove first
@@ -48,8 +50,10 @@ func _exit_tree():
   remove_custom_type("Factory Sprite")
   #remove_custom_type("SpriteResource")
 
+
 func _has_main_screen():
   return true
+
 
 func _make_visible(visible):
   # Show the main center panel
@@ -62,6 +66,7 @@ func _make_visible(visible):
   var nodes = get_editor_interface().get_selection().get_selected_nodes()
   if nodes.size() == 1:
     edit_node(nodes[0])
+
 
 # Call with a docked panel to have that panel's tab selected
 func activate_tab(panel, visible):
@@ -82,23 +87,29 @@ func activate_tab(panel, visible):
     # Select it
     dock.current_tab = index if visible else 0
 
+
 func _get_plugin_name():
   return "Sprite Factory"
 
+
 func _get_plugin_icon():
   return preload("res://addons/sprite_factory/icons/ToolTriangle.svg")
+
 
 # Override to request editing notifications for this node/resource type
 func _handles(obj):
   return obj is FactorySprite
 
+
 # Called by system to edit the given node
 func _edit(node):
   edit_node(node)
 
+
 # Called by system before a context switch to let us save our work
 func _apply_changes():
-  SpriteEditor.save_model()
+  FSEditor.save_model()
+
 
 # Actually load up a model (if possible) and start editing
 func edit_node(node):
@@ -107,7 +118,8 @@ func edit_node(node):
   if node != null and node is FactorySprite:
     model = FSModel.from(node)
   # And edit it!
-  SpriteEditor.edit_model(model)
+  FSEditor.edit_model(model)
+
 
 # Override to store global editor settings (select tool, last-used color, whatever)
 #func _get_window_layout():

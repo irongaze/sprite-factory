@@ -12,21 +12,21 @@ var size: int
 # Our list of components (which own our layers)
 var components : Array[FSComponent]
 
-# 3 textures
-var diffuse: FSTexture
-var normal: FSTexture
-var emissive: FSTexture
+# 3 textures, which slice our components
+var diffuse : FSTexture
+var normal : FSTexture
+var emissive : FSTexture
 
 
 # Call with a Sprite node to get the model we
 # can use to edit it's look
-static func from(sprite):
+static func from(sprite : FactorySprite):
   assert(sprite != null)
   var model = FSModel.new(sprite)
   return model
 
 
-func _init(new_sprite: FactorySprite):
+func _init(new_sprite : FactorySprite):
   # Capture the sprite
   assert(new_sprite != null)
   sprite = new_sprite
@@ -42,16 +42,33 @@ func _init(new_sprite: FactorySprite):
 
 
 # Get the texture of the given type
-func get_texture(type: FS.Channel):
+func get_texture(type : FS.Channel):
   match type:
     FS.Channel.DIFFUSE: return diffuse
     FS.Channel.NORMAL: return normal
     FS.Channel.EMISSIVE: return emissive
 
 
-# True if this model uses the given channel (currently means "has layers")
-func export_texture(type: FS.Channel):
-  return get_texture(type).layers.size() > 0
+# Get all layers in the given channel
+func get_layers(type : FS.Channel):
+  var list = []
+  for c in components:
+    list.append(c.get_layer(type))
+  return list
+
+
+func update_textures():
+  for ch in FS.Channel.values():
+    var tex = get_texture(ch)
+    tex.set_layers(get_layers(ch))
+
+
+# True if this model uses the given channel
+func uses_channel(ch : FS.Channel):
+  for component in components:
+    if component.get_layer(ch).shapes.size() > 0:
+      return true
+  return false
 
 
 # Load the image from disk and return as a texture
@@ -73,10 +90,22 @@ func load_all():
     data = JSON.parse_string(sprite.model_json)
   else: print('no json!')
 
-  # Load each texture
-  diffuse.load(data.get('diffuse', {}))
-  normal.load(data.get('normal', {}))
-  emissive.load(data.get('emissive', {}))
+  # Load up our components
+  components = []
+  var component_list = data.get('components', [])
+  for component_data in component_list:
+    # Load the component
+    var component = FSComponent.new(self)
+    component.load(component_data)
+    # Add to our master list
+    components.append(component)
+
+  if components.size() == 0:
+    components.append(FSComponent.new(self))
+
+  # Update our textures since our components have changed
+  update_textures()
+
 
 func save_all():
   # Build our core data
@@ -84,10 +113,11 @@ func save_all():
     "size": size
   }
 
-  # Save off each texture
-  data.diffuse = diffuse.save()
-  data.normal = normal.save()
-  data.emissive = emissive.save()
+  # Add in our components
+  var component_data = []
+  for component in components:
+    component_data.append(component.save())
+  data.components = component_data
 
   # Convert from a hash to a JSON string
   var json = JSON.stringify(data)

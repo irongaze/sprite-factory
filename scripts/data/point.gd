@@ -28,25 +28,6 @@ func _init(parent: FSShape, nx = 0.0, ny = 0.0):
   y = ny
 
 
-#func is_selected():
-  #return SpriteEditor.selection.has_item(self)
-#
-#
-#func select():
-  #SpriteEditor.selection.set_to(self)
-#
-#
-#func deselect():
-  #SpriteEditor.selection.remove(self)
-#
-#
-#func toggle_selection():
-  #if is_selected():
-    #deselect()
-  #else:
-    #select()
-
-
 func update(loc):
   x = loc.x
   y = loc.y

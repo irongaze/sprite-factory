@@ -5,90 +5,81 @@ extends VBoxContainer
 const LayerWidget = preload("res://addons/sprite_factory/scenes/side_panel/layer_widget.tscn")
 
 # The texture type we manage
-@export var channel: FS.Channel
-
-# Uplinks to model
-var model: SpriteModel
-var texture: SpriteTexture
+@export var channel : FS.Channel
 
 # Link to our layer widget container
-var layer_container: VBoxContainer
+var layer_container : VBoxContainer
 
 # Button links
-var add_layer_button: Button
-var layer_up_button: Button
-var layer_down_button: Button
-var delete_layer_button: Button
+var add_component_button : Button
+var component_up_button : Button
+var component_down_button : Button
+var delete_component_button : Button
+
 
 func _ready():
   layer_container = find_child("LayersContainer")
 
-  add_layer_button = find_child("AddLayerButton")
-  add_layer_button.pressed.connect(add_layer)
+  add_component_button = find_child("AddLayerButton")
+  add_component_button.pressed.connect(add_component)
 
-  layer_up_button = find_child("LayerUpButton")
-  layer_up_button.pressed.connect(move_layer.bind(false))
+  component_up_button = find_child("LayerUpButton")
+  component_up_button.pressed.connect(move_component.bind(false))
 
-  layer_down_button = find_child("LayerDownButton")
-  layer_down_button.pressed.connect(move_layer.bind(true))
+  component_down_button = find_child("LayerDownButton")
+  component_down_button.pressed.connect(move_component.bind(true))
 
-  delete_layer_button = find_child("DeleteLayerButton")
-  delete_layer_button.pressed.connect(delete_layer)
+  delete_component_button = find_child("DeleteLayerButton")
+  delete_component_button.pressed.connect(delete_component)
 
-  model_changed(null)
+  model_changed()
 
-  SpriteEditor.model_changed.connect(model_changed)
-  SpriteEditor.layer_changed.connect(layer_changed)
+  FS.model_changed.connect(model_changed)
+  FS.data_changed.connect(model_changed)
+  FS.ui_changed.connect(ui_changed)
+
 
 func _exit_tree():
-  SpriteEditor.layer_changed.disconnect(layer_changed)
-  SpriteEditor.model_changed.disconnect(model_changed)
+  FS.ui_changed.disconnect(ui_changed)
+  FS.data_changed.disconnect(model_changed)
+  FS.model_changed.disconnect(model_changed)
 
-func model_changed(new_model: SpriteModel):
-  # Save refs
-  model = new_model
-  texture = model.get_texture(channel) if model else null
 
+func model_changed():
   # Update controls
-  add_layer_button.disabled = model == null
   update_layers()
   update_ui()
 
-func layer_changed(layer):
+
+func ui_changed():
   update_ui()
 
-func add_layer():
-  var new_layer = SpriteLayer.new(texture)
-  texture.layers.push_front(new_layer)
-  SpriteEditor.fire_model_changed()
-  SpriteEditor.select_layer(new_layer)
 
-func delete_layer():
-  SpriteEditor.selection.clear()
+func add_component():
+  FSEditor.add_component()
 
-  var layer = SpriteEditor.layer
-  texture.delete_layer(layer)
 
-  SpriteEditor.fire_model_changed()
+func delete_component(c : FSComponent):
+  FSEditor.delete_component(c)
 
-func move_layer(down: bool):
-  var layer = SpriteEditor.layer
 
-  var index = layer.calc_index()
+func move_component(down: bool):
+  var index = FS.component.calc_index()
   var other_index = index + 1 if down else index - 1
 
-  texture.layers[index] = texture.layers[other_index]
-  texture.layers[other_index] = layer
+  FS.model.components[index] = FS.model.components[other_index]
+  FS.model.components[other_index] = FS.component
 
-  SpriteEditor.fire_model_changed()
+  FSEditor.fire_data_changed()
+
 
 func update_layers():
   # We may be getting null here as there's no current sprite
-  %NoSpriteLabel.visible = texture == null
-  if texture != null:
+  %NoSpriteLabel.visible = FS.model == null
+  if FS.model != null:
     # Run the layers in our texture and ensure there's a widget to match
-    for i in range(texture.layers.size()):
-      var layer = texture.layers[i]
+    for i in range(FS.model.components.size()):
+      var layer = FS.model.components[i].get_layer(channel)
       var ctrl
       if layer_container.get_child_count() > i:
         ctrl = layer_container.get_child(i)
@@ -98,15 +89,20 @@ func update_layers():
       ctrl.set_layer(layer)
 
   # Now delete any *extra* widgets that are no longer needed...
-  var last_idx = 0 if texture == null else texture.layers.size()
+  var last_idx = 0 if FS.model == null else FS.model.components.size()
   while layer_container.get_child_count() > last_idx:
     var ctrl = layer_container.get_child(last_idx)
     layer_container.remove_child(ctrl)
     ctrl.queue_free()
 
+
 func update_ui():
-  # Update our layer button state based on the number of selected layers
-  var layer = SpriteEditor.layer
-  layer_up_button.disabled = layer == null || layer.calc_index() == 0
-  layer_down_button.disabled = layer == null || layer.calc_index() >= layer.texture.layers.size() - 1
-  delete_layer_button.disabled = layer == null
+  # Got a model?
+  add_component_button.disabled = FS.model == null
+
+  # Update our component button state based on the number of selected components
+  var component = FS.component
+  var component_count = FS.model.components.size() if FS.model != null else 0
+  component_up_button.disabled = component == null || component.calc_index() == 0
+  component_down_button.disabled = component == null || component.calc_index() >= component_count - 1
+  delete_component_button.disabled = component == null || component_count <= 1

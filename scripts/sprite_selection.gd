@@ -21,7 +21,7 @@ func add(item, emit = true):
   if is_selectable(item):
     if !has_item(item):
       items.push_back(item)
-      if emit: FSEditor.fire_selection_changed()
+      #if emit: FSEditor.fire_selection_changed()
   else:
     print('Unable to add to selection!')
     print(item)
@@ -30,7 +30,7 @@ func add(item, emit = true):
 func remove(item, emit = true):
   if has_item(item):
     items.remove_at(items.find(item))
-    if emit: FSEditor.fire_selection_changed()
+    #if emit: FSEditor.fire_selection_changed()
 
 func toggle(item, emit = true):
   if has_item(item):
@@ -46,7 +46,7 @@ func set_to(new_items, emit = true):
   items = []
   for item in new_items:
     add(item, false)
-  if emit: FSEditor.fire_selection_changed()
+  #if emit: FSEditor.fire_selection_changed()
 
 ## Get all selected items, optionally filtered by one or more classes
 func get_all(klass = null):

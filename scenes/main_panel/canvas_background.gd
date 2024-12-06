@@ -11,13 +11,13 @@ var cur_sprite_size = -1
 
 
 func _ready():
-  SpriteFactorySettings.changed.connect(check_for_change)
-  SpriteEditor.model_changed.connect(func(model): model_changed(model))
+  FSSettings.changed.connect(check_for_change)
+  FS.model_changed.connect(func(): model_changed())
 
 
-func model_changed(model):
-  if model != cur_model:
-    cur_model = model
+func model_changed():
+  if FS.model != cur_model:
+    cur_model = FS.model
     queue_redraw()
   else:
     check_for_change()
@@ -33,13 +33,13 @@ func check_for_change():
 
 # Pixel snap distance, eventually get from editor/UI
 func get_snap_spacing():
-  return max(SpriteFactorySettings.grid_size, 2)
+  return max(FSSettings.grid_size, 2)
 
 
 # What size in pixels is our current sprite?
 func get_sprite_size():
-  if SpriteEditor.model:
-    return SpriteEditor.model.size
+  if FS.model:
+    return FS.model.size
   else:
     return 128
 
@@ -67,7 +67,7 @@ func draw_helpers():
   # Gray ourselves out if we've got no selected model
   var line_fn = draw_line
   var bg_color = Color.BLACK
-  if SpriteEditor.model == null:
+  if FS.model == null:
     line_fn = draw_dashed_line
     bg_color = Color(0.1,0.1,0.1,0.6)
 
@@ -92,7 +92,7 @@ func draw_helpers():
   line_fn.call(Vector2(0,-half), Vector2(0,half), color, 1.0)
   line_fn.call(Vector2(-half,0), Vector2(half,0), color, 1.0)
 
-  if SpriteEditor.model == null:
+  if FS.model == null:
     var notice = "no sprite selected"
     var pos = ui_font.get_string_size(notice) / 2.0
     pos.x *= -1

@@ -14,20 +14,20 @@
 [ext_resource type="Script" path="res://addons/sprite_factory/scripts/render_canvas.gd" id="12_wkk28"]
 [ext_resource type="Script" path="res://addons/sprite_factory/scenes/main_panel/canvas_input.gd" id="13_hu65t"]
 [ext_resource type="Script" path="res://addons/sprite_factory/scripts/render_viewport.gd" id="14_0smeh"]
-[ext_resource type="PackedScene" uid="uid://3ksvlekcrqxx" path="res://addons/sprite_factory/scenes/side_panel/palette_colors_window.tscn" id="15_c4rwf"]
+[ext_resource type="PackedScene" uid="uid://3ksvlekcrqxx" path="res://addons/sprite_factory/scenes/side_panel/edit_palette_window.tscn" id="15_c4rwf"]
 
 [sub_resource type="GDScript" id="GDScript_crvly"]
 script/source = "@tool
 extends Button
 
 func _ready():
-  toggled.connect(func(pressed): SpriteEditor.snap_point = pressed; SpriteEditor.ui_changed.emit())
-  SpriteEditor.ui_changed.connect(update_ui)
+  toggled.connect(func(pressed): FSEditor.snap_point = pressed; FSEditor.fire_ui_changed())
+  FS.ui_changed.connect(update_ui)
   update_ui()
 
 func update_ui():
-  button_pressed = SpriteEditor.snap_point
-  tooltip_text = \"Snap to point: \" + (\"On\" if SpriteEditor.snap_point else \"Off\") + \"\\nClick to toggle\"
+  button_pressed = FSEditor.snap_point
+  tooltip_text = \"Snap to point: \" + (\"On\" if FSEditor.snap_point else \"Off\") + \"\\nClick to toggle\"
 "
 
 [sub_resource type="GDScript" id="GDScript_8tqpo"]
@@ -35,13 +35,13 @@ script/source = "@tool
 extends Button
 
 func _ready():
-  toggled.connect(func(pressed): SpriteEditor.snap_line = pressed; SpriteEditor.ui_changed.emit())
-  SpriteEditor.ui_changed.connect(update_ui)
+  toggled.connect(func(pressed): FSEditor.snap_line = pressed; FSEditor.fire_ui_changed())
+  FS.ui_changed.connect(update_ui)
   update_ui()
 
 func update_ui():
-  button_pressed = SpriteEditor.snap_line
-  tooltip_text = \"Snap to line: \" + (\"On\" if SpriteEditor.snap_line else \"Off\") + \"\\nClick to toggle\"
+  button_pressed = FSEditor.snap_line
+  tooltip_text = \"Snap to line: \" + (\"On\" if FSEditor.snap_line else \"Off\") + \"\\nClick to toggle\"
 "
 
 [sub_resource type="GDScript" id="GDScript_fplgx"]
@@ -49,13 +49,13 @@ script/source = "@tool
 extends Button
 
 func _ready():
-  toggled.connect(func(pressed): SpriteEditor.snap_grid = pressed; SpriteEditor.ui_changed.emit())
-  SpriteEditor.ui_changed.connect(update_ui)
+  toggled.connect(func(pressed): FSEditor.snap_grid = pressed; FSEditor.fire_ui_changed())
+  FS.ui_changed.connect(update_ui)
   update_ui()
 
 func update_ui():
-  button_pressed = SpriteEditor.snap_grid
-  tooltip_text = \"Snap to grid: \" + (\"On\" if SpriteEditor.snap_grid else \"Off\") + \"\\nClick to toggle\"
+  button_pressed = FSEditor.snap_grid
+  tooltip_text = \"Snap to grid: \" + (\"On\" if FSEditor.snap_grid else \"Off\") + \"\\nClick to toggle\"
 "
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2o8mm"]
@@ -94,7 +94,6 @@ layout_mode = 2
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 focus_mode = 0
-disabled = true
 toggle_mode = true
 action_mode = 0
 icon = ExtResource("2_xev72")
@@ -107,7 +106,6 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "Select a layer to draw new shapes"
 focus_mode = 0
-disabled = true
 toggle_mode = true
 action_mode = 0
 icon = ExtResource("4_n2yd7")

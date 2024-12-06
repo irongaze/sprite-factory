@@ -21,7 +21,7 @@ func _init(new_layer: FSLayer):
 
 func set_color(new_color: FSColor):
   color.update(new_color)
-  SpriteEditor.fire_model_changed()
+  FSEditor.fire_data_changed()
 
 
 func add_point(loc):
@@ -61,7 +61,7 @@ func render(canvas: RenderCanvas, mirror = false):
   if points.size() >= 3:
     # Mirror our color?
     var draw_color = color
-    if mirror && layer.texture.is_normal():
+    if mirror && layer.is_normal():
       draw_color.r = 1.0 - draw_color.r
 
     # Fill polygon
@@ -106,7 +106,7 @@ func closest_point(pt: Vector2):
     # Don't find points in the current selection, don't want to
     # snap to ourselves
     if !test_pt.is_selected():
-      if closest == null || SpritePoint.distance(pt, test_pt) < SpritePoint.distance(pt, closest):
+      if closest == null || FSPoint.distance(pt, test_pt) < FSPoint.distance(pt, closest):
         closest = test_pt
   return closest
 
@@ -116,11 +116,11 @@ func closest_line(pt):
   var closest = null
   for i in range(points.size()):
     var test_pt = closest_segment(points[i], points[(i + 1) % points.size()], pt);
-    if closest == null || SpritePoint.distance(pt, test_pt) < SpritePoint.distance(pt, closest):
+    if closest == null || FSPoint.distance(pt, test_pt) < FSPoint.distance(pt, closest):
       closest = test_pt
 
   # Return as vector if found
-  return SpritePoint.vector(closest)
+  return FSPoint.vector(closest)
 
 
 # Returns the point on the given segment closest to the test point

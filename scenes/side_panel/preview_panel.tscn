@@ -26,7 +26,7 @@ render_target_update_mode = 4
 
 [node name="PreviewLight" type="DirectionalLight2D" parent="SubViewportContainer/SubViewport"]
 unique_name_in_owner = true
-rotation = 116964.0
+rotation = 117143.0
 height = 0.2
 
 [node name="PreviewRoot" type="Node2D" parent="SubViewportContainer/SubViewport"]

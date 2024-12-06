@@ -11,6 +11,4 @@ func _gui_input(event):
     var tex = sprite.texture
     var img = tex.get_image()
     var color = img.get_pixel(event.position.x, event.position.y)
-    SpriteEditor.color_changed.emit(color, FS.Channel.NORMAL)
-
-
+    #FSEditor.apply_color(color)

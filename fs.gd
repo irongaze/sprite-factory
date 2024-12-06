@@ -8,12 +8,11 @@ enum Channel {
   EMISSIVE = 2
 }
 
-
 # Instance of our main editor
 static var editor := FSEditor.new()
 
 
-# Reference
+# References
 
 # Selected Godot node that we're editing (if any)
 static var node : FactorySprite
@@ -31,7 +30,7 @@ static var tool : FSTool
 
 # Signals
 
-# When fired, the model's data has changed
+# When fired, which model we're editing has changed
 static var model_changed: Signal:
   get: return editor.model_changed
 

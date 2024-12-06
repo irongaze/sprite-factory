@@ -9,8 +9,8 @@ var map = {}
 
 
 # Constructor
-func init(nchannel : FS.Channel):
-  channel = nchannel
+func _init(ch := FS.Channel.DIFFUSE):
+  channel = ch
 
 
 # Add a new color to the palette
